@@ -5,15 +5,10 @@
  */
 package progetto;
 
-/**
- *
- * @author Victor
- */
+
 public class Progetto {
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) {
         // TODO code application logic here
     }
