@@ -315,7 +315,7 @@
                   <Component id="jPanel66" alignment="0" max="32767" attributes="0"/>
                   <Component id="sample4_button" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
