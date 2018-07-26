@@ -5,37 +5,44 @@
  */
 package progetto;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
+import javafx.scene.paint.Color;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
-/**
- *
- * @author Victor
- */
+
+
+
+
 public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
     private String sample_path_1;
     private String sample_path_2;
     private String sample_path_3;
     private String sample_path_4;
+    private ArrayList<JPanel> step_array;
+    
+    
     
     public Sequencer() {
         this.getContentPane().setBackground(new java.awt.Color(39, 43, 45));
         initComponents();
-        
-        
-        
+              
+       
         //****** sezione degli add ActionListener **********
         sample1_button.addActionListener(this);
         sample2_button.addActionListener(this);
         sample3_button.addActionListener(this);
         sample4_button.addActionListener(this);
+        
+        
         //****** end sezione add action Listener ************
+        
         
     }
 
@@ -171,6 +178,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel1.setForeground(new java.awt.Color(102, 102, 102));
         jPanel1.setToolTipText("");
         jPanel1.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,6 +206,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel3.setForeground(new java.awt.Color(102, 102, 102));
         jPanel3.setToolTipText("");
         jPanel3.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -205,6 +234,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel5.setForeground(new java.awt.Color(102, 102, 102));
         jPanel5.setToolTipText("");
         jPanel5.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -222,6 +262,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
         jPanel2.setToolTipText("");
         jPanel2.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -239,6 +290,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel6.setForeground(new java.awt.Color(102, 102, 102));
         jPanel6.setToolTipText("");
         jPanel6.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -256,6 +318,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel7.setForeground(new java.awt.Color(102, 102, 102));
         jPanel7.setToolTipText("");
         jPanel7.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -273,6 +346,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel8.setForeground(new java.awt.Color(102, 102, 102));
         jPanel8.setToolTipText("");
         jPanel8.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -290,6 +374,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel9.setForeground(new java.awt.Color(102, 102, 102));
         jPanel9.setToolTipText("");
         jPanel9.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -307,6 +402,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel10.setForeground(new java.awt.Color(102, 102, 102));
         jPanel10.setToolTipText("");
         jPanel10.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -324,6 +430,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel11.setForeground(new java.awt.Color(102, 102, 102));
         jPanel11.setToolTipText("");
         jPanel11.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -341,6 +458,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel12.setForeground(new java.awt.Color(102, 102, 102));
         jPanel12.setToolTipText("");
         jPanel12.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -358,6 +486,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel13.setForeground(new java.awt.Color(102, 102, 102));
         jPanel13.setToolTipText("");
         jPanel13.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -375,6 +514,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel14.setForeground(new java.awt.Color(102, 102, 102));
         jPanel14.setToolTipText("");
         jPanel14.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -392,6 +542,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel16.setForeground(new java.awt.Color(102, 102, 102));
         jPanel16.setToolTipText("");
         jPanel16.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -409,6 +570,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel18.setForeground(new java.awt.Color(102, 102, 102));
         jPanel18.setToolTipText("");
         jPanel18.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -426,6 +598,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel19.setForeground(new java.awt.Color(102, 102, 102));
         jPanel19.setToolTipText("");
         jPanel19.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -443,6 +626,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel15.setForeground(new java.awt.Color(102, 102, 102));
         jPanel15.setToolTipText("");
         jPanel15.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -460,6 +654,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel20.setForeground(new java.awt.Color(102, 102, 102));
         jPanel20.setToolTipText("");
         jPanel20.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -477,6 +682,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel21.setForeground(new java.awt.Color(102, 102, 102));
         jPanel21.setToolTipText("");
         jPanel21.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -494,6 +710,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel22.setForeground(new java.awt.Color(102, 102, 102));
         jPanel22.setToolTipText("");
         jPanel22.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -511,6 +738,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel23.setForeground(new java.awt.Color(102, 102, 102));
         jPanel23.setToolTipText("");
         jPanel23.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -528,6 +766,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel24.setForeground(new java.awt.Color(102, 102, 102));
         jPanel24.setToolTipText("");
         jPanel24.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
@@ -545,6 +794,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel25.setForeground(new java.awt.Color(102, 102, 102));
         jPanel25.setToolTipText("");
         jPanel25.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel25.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
@@ -562,6 +822,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel26.setForeground(new java.awt.Color(102, 102, 102));
         jPanel26.setToolTipText("");
         jPanel26.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel26.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -579,6 +850,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel27.setForeground(new java.awt.Color(102, 102, 102));
         jPanel27.setToolTipText("");
         jPanel27.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel27.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
@@ -596,6 +878,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel28.setForeground(new java.awt.Color(102, 102, 102));
         jPanel28.setToolTipText("");
         jPanel28.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel28.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -613,6 +906,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel29.setForeground(new java.awt.Color(102, 102, 102));
         jPanel29.setToolTipText("");
         jPanel29.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel29.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
         jPanel29.setLayout(jPanel29Layout);
@@ -630,6 +934,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel30.setForeground(new java.awt.Color(102, 102, 102));
         jPanel30.setToolTipText("");
         jPanel30.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel30.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
         jPanel30.setLayout(jPanel30Layout);
@@ -647,6 +962,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel31.setForeground(new java.awt.Color(102, 102, 102));
         jPanel31.setToolTipText("");
         jPanel31.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel31.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
         jPanel31.setLayout(jPanel31Layout);
@@ -664,6 +990,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel32.setForeground(new java.awt.Color(102, 102, 102));
         jPanel32.setToolTipText("");
         jPanel32.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel32.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
         jPanel32.setLayout(jPanel32Layout);
@@ -681,6 +1018,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel33.setForeground(new java.awt.Color(102, 102, 102));
         jPanel33.setToolTipText("");
         jPanel33.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel33.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel33Layout = new javax.swing.GroupLayout(jPanel33);
         jPanel33.setLayout(jPanel33Layout);
@@ -698,6 +1046,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel34.setForeground(new java.awt.Color(102, 102, 102));
         jPanel34.setToolTipText("");
         jPanel34.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel34.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
         jPanel34.setLayout(jPanel34Layout);
@@ -715,6 +1074,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel35.setForeground(new java.awt.Color(102, 102, 102));
         jPanel35.setToolTipText("");
         jPanel35.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel35.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
         jPanel35.setLayout(jPanel35Layout);
@@ -732,6 +1102,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel36.setForeground(new java.awt.Color(102, 102, 102));
         jPanel36.setToolTipText("");
         jPanel36.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel36.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel36Layout = new javax.swing.GroupLayout(jPanel36);
         jPanel36.setLayout(jPanel36Layout);
@@ -749,6 +1130,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel37.setForeground(new java.awt.Color(102, 102, 102));
         jPanel37.setToolTipText("");
         jPanel37.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel37.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
         jPanel37.setLayout(jPanel37Layout);
@@ -766,6 +1158,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel38.setForeground(new java.awt.Color(102, 102, 102));
         jPanel38.setToolTipText("");
         jPanel38.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel38.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
         jPanel38.setLayout(jPanel38Layout);
@@ -783,6 +1186,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel39.setForeground(new java.awt.Color(102, 102, 102));
         jPanel39.setToolTipText("");
         jPanel39.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel39.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel39Layout = new javax.swing.GroupLayout(jPanel39);
         jPanel39.setLayout(jPanel39Layout);
@@ -800,6 +1214,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel40.setForeground(new java.awt.Color(102, 102, 102));
         jPanel40.setToolTipText("");
         jPanel40.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
         jPanel40.setLayout(jPanel40Layout);
@@ -817,6 +1242,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel41.setForeground(new java.awt.Color(102, 102, 102));
         jPanel41.setToolTipText("");
         jPanel41.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel41.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel41Layout = new javax.swing.GroupLayout(jPanel41);
         jPanel41.setLayout(jPanel41Layout);
@@ -834,6 +1270,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel42.setForeground(new java.awt.Color(102, 102, 102));
         jPanel42.setToolTipText("");
         jPanel42.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel42.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
         jPanel42.setLayout(jPanel42Layout);
@@ -851,6 +1298,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel43.setForeground(new java.awt.Color(102, 102, 102));
         jPanel43.setToolTipText("");
         jPanel43.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel43.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
         jPanel43.setLayout(jPanel43Layout);
@@ -868,6 +1326,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel44.setForeground(new java.awt.Color(102, 102, 102));
         jPanel44.setToolTipText("");
         jPanel44.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel44.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel44Layout = new javax.swing.GroupLayout(jPanel44);
         jPanel44.setLayout(jPanel44Layout);
@@ -885,6 +1354,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel45.setForeground(new java.awt.Color(102, 102, 102));
         jPanel45.setToolTipText("");
         jPanel45.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel45.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel45Layout = new javax.swing.GroupLayout(jPanel45);
         jPanel45.setLayout(jPanel45Layout);
@@ -902,6 +1382,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel46.setForeground(new java.awt.Color(102, 102, 102));
         jPanel46.setToolTipText("");
         jPanel46.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel46.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel46Layout = new javax.swing.GroupLayout(jPanel46);
         jPanel46.setLayout(jPanel46Layout);
@@ -919,6 +1410,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel47.setForeground(new java.awt.Color(102, 102, 102));
         jPanel47.setToolTipText("");
         jPanel47.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel47.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel47Layout = new javax.swing.GroupLayout(jPanel47);
         jPanel47.setLayout(jPanel47Layout);
@@ -936,6 +1438,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel48.setForeground(new java.awt.Color(102, 102, 102));
         jPanel48.setToolTipText("");
         jPanel48.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel48.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
         jPanel48.setLayout(jPanel48Layout);
@@ -953,6 +1466,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel49.setForeground(new java.awt.Color(102, 102, 102));
         jPanel49.setToolTipText("");
         jPanel49.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel49.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel49Layout = new javax.swing.GroupLayout(jPanel49);
         jPanel49.setLayout(jPanel49Layout);
@@ -970,6 +1494,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel50.setForeground(new java.awt.Color(102, 102, 102));
         jPanel50.setToolTipText("");
         jPanel50.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel50.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel50Layout = new javax.swing.GroupLayout(jPanel50);
         jPanel50.setLayout(jPanel50Layout);
@@ -987,6 +1522,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel51.setForeground(new java.awt.Color(102, 102, 102));
         jPanel51.setToolTipText("");
         jPanel51.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel51.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel51Layout = new javax.swing.GroupLayout(jPanel51);
         jPanel51.setLayout(jPanel51Layout);
@@ -1004,6 +1550,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel52.setForeground(new java.awt.Color(102, 102, 102));
         jPanel52.setToolTipText("");
         jPanel52.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel52.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel52Layout = new javax.swing.GroupLayout(jPanel52);
         jPanel52.setLayout(jPanel52Layout);
@@ -1021,6 +1578,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel53.setForeground(new java.awt.Color(102, 102, 102));
         jPanel53.setToolTipText("");
         jPanel53.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel53.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel53Layout = new javax.swing.GroupLayout(jPanel53);
         jPanel53.setLayout(jPanel53Layout);
@@ -1038,6 +1606,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel54.setForeground(new java.awt.Color(102, 102, 102));
         jPanel54.setToolTipText("");
         jPanel54.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel54.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel54Layout = new javax.swing.GroupLayout(jPanel54);
         jPanel54.setLayout(jPanel54Layout);
@@ -1055,6 +1634,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel55.setForeground(new java.awt.Color(102, 102, 102));
         jPanel55.setToolTipText("");
         jPanel55.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel55.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel55Layout = new javax.swing.GroupLayout(jPanel55);
         jPanel55.setLayout(jPanel55Layout);
@@ -1072,6 +1662,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel56.setForeground(new java.awt.Color(102, 102, 102));
         jPanel56.setToolTipText("");
         jPanel56.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel56.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel56Layout = new javax.swing.GroupLayout(jPanel56);
         jPanel56.setLayout(jPanel56Layout);
@@ -1089,6 +1690,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel57.setForeground(new java.awt.Color(102, 102, 102));
         jPanel57.setToolTipText("");
         jPanel57.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel57.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel57Layout = new javax.swing.GroupLayout(jPanel57);
         jPanel57.setLayout(jPanel57Layout);
@@ -1106,6 +1718,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel58.setForeground(new java.awt.Color(102, 102, 102));
         jPanel58.setToolTipText("");
         jPanel58.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel58.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel58Layout = new javax.swing.GroupLayout(jPanel58);
         jPanel58.setLayout(jPanel58Layout);
@@ -1123,6 +1746,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel59.setForeground(new java.awt.Color(102, 102, 102));
         jPanel59.setToolTipText("");
         jPanel59.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel59.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel59Layout = new javax.swing.GroupLayout(jPanel59);
         jPanel59.setLayout(jPanel59Layout);
@@ -1140,6 +1774,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel60.setForeground(new java.awt.Color(102, 102, 102));
         jPanel60.setToolTipText("");
         jPanel60.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel60.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel60Layout = new javax.swing.GroupLayout(jPanel60);
         jPanel60.setLayout(jPanel60Layout);
@@ -1157,6 +1802,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel61.setForeground(new java.awt.Color(102, 102, 102));
         jPanel61.setToolTipText("");
         jPanel61.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel61.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel61Layout = new javax.swing.GroupLayout(jPanel61);
         jPanel61.setLayout(jPanel61Layout);
@@ -1174,6 +1830,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel62.setForeground(new java.awt.Color(102, 102, 102));
         jPanel62.setToolTipText("");
         jPanel62.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel62.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel62Layout = new javax.swing.GroupLayout(jPanel62);
         jPanel62.setLayout(jPanel62Layout);
@@ -1191,6 +1858,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel63.setForeground(new java.awt.Color(102, 102, 102));
         jPanel63.setToolTipText("");
         jPanel63.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel63.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel63Layout = new javax.swing.GroupLayout(jPanel63);
         jPanel63.setLayout(jPanel63Layout);
@@ -1208,6 +1886,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel64.setForeground(new java.awt.Color(102, 102, 102));
         jPanel64.setToolTipText("");
         jPanel64.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel64.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel64Layout = new javax.swing.GroupLayout(jPanel64);
         jPanel64.setLayout(jPanel64Layout);
@@ -1225,6 +1914,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel65.setForeground(new java.awt.Color(102, 102, 102));
         jPanel65.setToolTipText("");
         jPanel65.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel65.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel65Layout = new javax.swing.GroupLayout(jPanel65);
         jPanel65.setLayout(jPanel65Layout);
@@ -1242,6 +1942,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         jPanel66.setForeground(new java.awt.Color(102, 102, 102));
         jPanel66.setToolTipText("");
         jPanel66.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel66.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                step_MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                step_MouseOver(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                step_MouseExit(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel66Layout = new javax.swing.GroupLayout(jPanel66);
         jPanel66.setLayout(jPanel66Layout);
@@ -1533,6 +2244,34 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         // TODO add your handling code here:
     }//GEN-LAST:event_import_buttonActionPerformed
 
+    private void step_MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_step_MouseClicked
+        //gestione dei click sugli step
+        if(evt.getSource() instanceof JPanel){
+            System.out.println("CIAO!");
+            JPanel questo = (JPanel)evt.getSource();
+            //int questo_color = questo.getBackground().getRGB();
+            questo.setBackground(java.awt.Color.red);
+        }
+    }//GEN-LAST:event_step_MouseClicked
+
+    private void step_MouseOver(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_step_MouseOver
+        if(evt.getSource() instanceof JPanel){
+            System.out.print("OVER SU ");
+            JPanel questo = (JPanel)evt.getSource();
+            System.out.println(questo.getName());
+        }
+    }//GEN-LAST:event_step_MouseOver
+
+    private void step_MouseExit(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_step_MouseExit
+        if(evt.getSource() instanceof JPanel){
+            System.out.print("EXIT DA ");
+            JPanel questo = (JPanel)evt.getSource();
+            System.out.println(questo.getName());
+        }
+    }//GEN-LAST:event_step_MouseExit
+
+    
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         //carica i Samples
