@@ -13,6 +13,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import javafx.scene.paint.Color;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -36,6 +39,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     int r2 = 130; int g2 = 40; int b2 = 119;
     int r3 = 240; int g3 = 252; int b3 = 106;
     int r4 = 68; int g4 = 237; int b4 = 225;
+    
+    
     
     
     public Sequencer() {
@@ -235,7 +240,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     }//GEN-LAST:event_import_buttonActionPerformed
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
-        //RIPRODUZIONE DI TUTTO
+        //RIPRODUZIONE musicale
+        
         
     }//GEN-LAST:event_play_buttonActionPerformed
 
@@ -252,25 +258,75 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 */
                 JLabel numero = (JLabel)step.getComponent(0);
                 
-                //coloriamo gli step
+                //coloriamo gli step && SUONARE I SAMPLE QUANDO CLICCA(?)
                 int scelta = 0;
                 scelta = Integer.parseInt(numero.getText());
                 
                 if(scelta < 16){
                     //PRIMA RIGA
                     step.setBackground(new java.awt.Color(r1,g1,b1));
+                    //SUONA IL SAMPLE 1
+                    if(sample_path_1 != null && !sample_path_1.isEmpty()){
+                        try {
+                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_1).getAbsoluteFile());
+                            Clip clip = AudioSystem.getClip();
+                            clip.open(audioInputStream);
+                            clip.start();
+                        } catch(Exception ex) {
+                            System.out.println("Error with playing sound.");
+                            ex.printStackTrace();
+                        }
+                    }
+                    
+                    
                 }
                 if(scelta < 32 && scelta > 15){
                     //SECONDA RIGA
                     step.setBackground(new java.awt.Color(r2,g2,b2));
+                    //SUONA IL SAMPLE 2
+                    if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                        try {
+                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_2).getAbsoluteFile());
+                            Clip clip = AudioSystem.getClip();
+                            clip.open(audioInputStream);
+                            clip.start();
+                        } catch(Exception ex) {
+                            System.out.println("Error with playing sound.");
+                            ex.printStackTrace();
+                        }
+                    }
                 }
                 if(scelta < 48 && scelta > 31){
                     //TERZA RIGA
                     step.setBackground(new java.awt.Color(r3,g3,b3));
+                    //SUONA IL SAMPLE 3
+                    if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                        try {
+                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_3).getAbsoluteFile());
+                            Clip clip = AudioSystem.getClip();
+                            clip.open(audioInputStream);
+                            clip.start();
+                        } catch(Exception ex) {
+                            System.out.println("Error with playing sound.");
+                            ex.printStackTrace();
+                        }
+                    }
                 }
                 if(scelta < 64 && scelta > 47){
                     //QUARTA RIGA
                     step.setBackground(new java.awt.Color(r4,g4,b4));
+                    //SUONA IL SAMPLE 1
+                    if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                        try {
+                            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_4).getAbsoluteFile());
+                            Clip clip = AudioSystem.getClip();
+                            clip.open(audioInputStream);
+                            clip.start();
+                        } catch(Exception ex) {
+                            System.out.println("Error with playing sound.");
+                            ex.printStackTrace();
+                        }
+                    }
                 }
                 
             }else{
