@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.scene.paint.Color;
 import javax.sound.sampled.AudioInputStream;
@@ -21,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 
@@ -40,6 +44,12 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     int r3 = 240; int g3 = 252; int b3 = 106;
     int r4 = 68; int g4 = 237; int b4 = 225;
     
+    JPanel panel[];
+    private Timer tempoh;
+    private int cont_riga_1 = 0;
+    private int cont_riga_2 = 16;
+    private int cont_riga_3 = 32;
+    private int cont_riga_4 = 48;
     
     
     
@@ -63,7 +73,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         //prova aggiunta con grid layout
         int cols = 16;
         int rows = 4;
-        JPanel[] panel = new JPanel[cols*rows];
+        panel = new JPanel[cols*rows];
         int boh = 0;
         
         for (int x = 0; x < rows; x++)
@@ -121,6 +131,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         });
 
         stop_button.setText("STOP");
+        stop_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stop_buttonActionPerformed(evt);
+            }
+        });
 
         bpm_field.setText("120");
 
@@ -242,9 +257,83 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
         //RIPRODUZIONE musicale
         
+        //prima prova: illuminare con dei ritardi
+        //I riga: 0
+        //II riga: 0+16
+        //III riga: 0+16+16
+        // IV riga: 0+16+16+16
         
+       
+        play_button.setEnabled(false);
+        //istanzio Timer
+        tempoh = new Timer(500, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                update_roba();
+            }
+        
+        });
+        tempoh.start();
+            
+               
     }//GEN-LAST:event_play_buttonActionPerformed
 
+    private void stop_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_buttonActionPerformed
+        
+        tempoh.stop();
+        play_button.setEnabled(true);
+    }//GEN-LAST:event_stop_buttonActionPerformed
+    
+    //QUA DENTRO VA FATTO TUTTO:
+    // 1) aggiornare i colori degli step
+    // 2) play dei sample SE lo step è colorato
+    private void update_roba(){
+        //Date cur = new Date();
+        //bpm_label.setText(cur.toString());
+        if(cont_riga_1 >= 16 && cont_riga_2 >= 32 && cont_riga_3 >=48 && cont_riga_4 >=63){
+            cont_riga_1 = 0;
+            cont_riga_2 = 16;
+            cont_riga_3 = 32;
+            cont_riga_4 = 48;   
+        }
+        
+        
+        if((cont_riga_1>0 && cont_riga_1 <16) && (cont_riga_2 > 15 && cont_riga_2 < 32) && (cont_riga_3 > 31 && cont_riga_3 <48) && (cont_riga_4 > 47 && cont_riga_4 < 64)){
+            panel[cont_riga_1-1].setBackground(panel[cont_riga_1-1].getBackground().darker().darker());   
+            panel[cont_riga_2-1].setBackground(panel[cont_riga_2-1].getBackground().darker().darker());
+            panel[cont_riga_3-1].setBackground(panel[cont_riga_3-1].getBackground().darker().darker()); 
+            panel[cont_riga_4-1].setBackground(panel[cont_riga_4-1].getBackground().darker().darker()); 
+        }
+
+        panel[cont_riga_1].setBackground(panel[cont_riga_1].getBackground().brighter().brighter());
+        panel[cont_riga_2].setBackground(panel[cont_riga_2].getBackground().brighter().brighter());
+        panel[cont_riga_3].setBackground(panel[cont_riga_3].getBackground().brighter().brighter());
+        panel[cont_riga_4].setBackground(panel[cont_riga_4].getBackground().brighter().brighter());
+        cont_riga_1++;
+        cont_riga_2++;
+        cont_riga_3++;
+        cont_riga_4++;
+        
+        
+        //suona i sample
+        if(panel[cont_riga_1].getBackground().brighter().brighter() != java.awt.Color.darkGray.brighter().brighter()){
+            if(sample_path_1 != null && !sample_path_1.isEmpty()){
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_1).getAbsoluteFile());
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+                } catch(Exception ex) {
+                    System.out.println("Error with playing sound.");
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
+       
+    
+    }
+    
     private void step_MouseClicked(MouseEvent evt) {
         if(evt.getSource() instanceof JPanel){
             JPanel step = (JPanel)evt.getSource();
