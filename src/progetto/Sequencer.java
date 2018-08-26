@@ -140,7 +140,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
         bpm_field.setText("120");
 
-        bpm_label.setText("BPM");
+        bpm_label.setText("<html><font color='white'>BPM</font></html>");
 
         export_button.setText("Export mp3");
         export_button.addActionListener(new java.awt.event.ActionListener() {
@@ -159,6 +159,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         });
 
         reset_button.setText("reset pattern");
+        reset_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reset_buttonActionPerformed(evt);
+            }
+        });
 
         sample1_button.setText("Sample 1");
 
@@ -192,7 +197,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(stop_button)
                         .addGap(18, 18, 18)
-                        .addComponent(bpm_label)
+                        .addComponent(bpm_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
                         .addComponent(bpm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
@@ -222,7 +227,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                     .addComponent(play_button)
                     .addComponent(stop_button)
                     .addComponent(bpm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpm_label)
+                    .addComponent(bpm_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(export_button)
                     .addComponent(save_button)
                     .addComponent(import_button)
@@ -257,8 +262,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
         //RIPRODUZIONE musicale
-
+        reset_button.setEnabled(false);
         play_button.setEnabled(false);
+        stop_button.setEnabled(true);
         //istanzio Timer
         tempoh = new Timer(500, new ActionListener(){
             @Override
@@ -276,7 +282,34 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         tempoh.stop();
         play_button.setEnabled(true);
+        stop_button.setEnabled(false);
+        //non posso resettare il pattern durante l'esecuzione 
+        reset_button.setEnabled(true);
+        
+        //Ripristino i contatori originali per far ripartire l'esecuzione da capo dopo il play dall'inizio
+        cont_riga_1 = 0;
+        cont_riga_2 = 16;
+        cont_riga_3 = 32;
+        cont_riga_4 = 48;
+        
+        //Il ciclo dovrebbe eliminare la colonna luminosa dico dovrebbe perchè ci sono problemi con i brighter e darker, sembra che tolgano ed 
+        //Aggiungano valori diversi
+        for(int i=0; i<64; i++){
+            java.awt.Color c = panel[i].getBackground();
+            //System.out.println("colore: "+i+"");
+            if(c.equals(java.awt.Color.GRAY.brighter()) || c.equals(new java.awt.Color(r1, g1, b1).brighter()) || c.equals(new java.awt.Color(r2, g2, b2).brighter()) || c.equals(new java.awt.Color(r3, g3, b3).brighter()) || c.equals(new java.awt.Color(r4, g4, b4).brighter())){
+                panel[i].setBackground(panel[i].getBackground().darker());
+            }
+        }
     }//GEN-LAST:event_stop_buttonActionPerformed
+
+    private void reset_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_buttonActionPerformed
+        // TODO add your handling code here:
+        //Scorro tutti gli step e li imposto a grigio
+        for(int i=0; i<64; i++){
+            panel[i].setBackground(java.awt.Color.GRAY);
+        }
+    }//GEN-LAST:event_reset_buttonActionPerformed
     
     //QUA DENTRO VA FATTO TUTTO:
     // 1) aggiornare i colori degli step
@@ -306,7 +339,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         
         java.awt.Color c = panel[cont_riga_1].getBackground();
-        System.out.println("COLORE:"+c.getRGB());
+        //System.out.println("COLORE:"+c.getRGB());
         if(c.equals(new java.awt.Color(r1,g1,b1).brighter())){
             //System.out.println("PING!");
             if(sample_path_1 != null && !sample_path_1.isEmpty()){
