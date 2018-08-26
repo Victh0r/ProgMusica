@@ -39,7 +39,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private ArrayList<JPanel> step_array;
     
     //colori delle file (quando vengono premuti i bottoni)
-    int r1 = 186; int g1 = 35; int b1 = 35;
+    int r1 = 186; int g1 = 35; int b1 = 35; //RIGA 1 PREMUTO
+    int r1P = 252; int g1P = 88; int b1P = 88; //RIGA 1 QUANDO PASSA IL COSO
     int r2 = 130; int g2 = 40; int b2 = 119;
     int r3 = 240; int g3 = 252; int b3 = 106;
     int r4 = 68; int g4 = 237; int b4 = 225;
@@ -256,14 +257,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
         //RIPRODUZIONE musicale
-        
-        //prima prova: illuminare con dei ritardi
-        //I riga: 0
-        //II riga: 0+16
-        //III riga: 0+16+16
-        // IV riga: 0+16+16+16
-        
-       
+
         play_button.setEnabled(false);
         //istanzio Timer
         tempoh = new Timer(500, new ActionListener(){
@@ -299,25 +293,24 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         
         if((cont_riga_1>0 && cont_riga_1 <16) && (cont_riga_2 > 15 && cont_riga_2 < 32) && (cont_riga_3 > 31 && cont_riga_3 <48) && (cont_riga_4 > 47 && cont_riga_4 < 64)){
-            panel[cont_riga_1-1].setBackground(panel[cont_riga_1-1].getBackground().darker().darker());   
-            panel[cont_riga_2-1].setBackground(panel[cont_riga_2-1].getBackground().darker().darker());
-            panel[cont_riga_3-1].setBackground(panel[cont_riga_3-1].getBackground().darker().darker()); 
-            panel[cont_riga_4-1].setBackground(panel[cont_riga_4-1].getBackground().darker().darker()); 
+            panel[cont_riga_1-1].setBackground(panel[cont_riga_1-1].getBackground().darker());
+            panel[cont_riga_2-1].setBackground(panel[cont_riga_2-1].getBackground().darker());
+            panel[cont_riga_3-1].setBackground(panel[cont_riga_3-1].getBackground().darker()); 
+            panel[cont_riga_4-1].setBackground(panel[cont_riga_4-1].getBackground().darker()); 
         }
 
-        panel[cont_riga_1].setBackground(panel[cont_riga_1].getBackground().brighter().brighter());
-        panel[cont_riga_2].setBackground(panel[cont_riga_2].getBackground().brighter().brighter());
-        panel[cont_riga_3].setBackground(panel[cont_riga_3].getBackground().brighter().brighter());
-        panel[cont_riga_4].setBackground(panel[cont_riga_4].getBackground().brighter().brighter());
-        cont_riga_1++;
-        cont_riga_2++;
-        cont_riga_3++;
-        cont_riga_4++;
+        panel[cont_riga_1].setBackground(panel[cont_riga_1].getBackground().brighter());
+        panel[cont_riga_2].setBackground(panel[cont_riga_2].getBackground().brighter());
+        panel[cont_riga_3].setBackground(panel[cont_riga_3].getBackground().brighter());
+        panel[cont_riga_4].setBackground(panel[cont_riga_4].getBackground().brighter());
         
         
-        //suona i sample
-        if(panel[cont_riga_1].getBackground().brighter().brighter() != java.awt.Color.darkGray.brighter().brighter()){
+        java.awt.Color c = panel[cont_riga_1].getBackground();
+        System.out.println("COLORE:"+c.getRGB());
+        if(c.equals(new java.awt.Color(r1,g1,b1).brighter())){
+            //System.out.println("PING!");
             if(sample_path_1 != null && !sample_path_1.isEmpty()){
+                
                 try {
                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_1).getAbsoluteFile());
                     Clip clip = AudioSystem.getClip();
@@ -330,7 +323,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             }
         }
         
-       
+        cont_riga_1++;
+        cont_riga_2++;
+        cont_riga_3++;
+        cont_riga_4++;
     
     }
     
