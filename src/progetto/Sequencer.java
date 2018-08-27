@@ -294,11 +294,14 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         //Il ciclo dovrebbe eliminare la colonna luminosa dico dovrebbe perchè ci sono problemi con i brighter e darker, sembra che tolgano ed 
         //Aggiungano valori diversi
-        for(int i=0; i<64; i++){
+        for(int i=0; i<16; i++){
             java.awt.Color c = panel[i].getBackground();
             //System.out.println("colore: "+i+"");
             if(c.equals(java.awt.Color.GRAY.brighter()) || c.equals(new java.awt.Color(r1, g1, b1).brighter()) || c.equals(new java.awt.Color(r2, g2, b2).brighter()) || c.equals(new java.awt.Color(r3, g3, b3).brighter()) || c.equals(new java.awt.Color(r4, g4, b4).brighter())){
-                panel[i].setBackground(panel[i].getBackground().darker());
+                mydarker(i);
+                mydarker(i+16);
+                mydarker(i+32);
+                mydarker(i+48);
             }
         }
     }//GEN-LAST:event_stop_buttonActionPerformed
@@ -326,10 +329,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         
         if((cont_riga_1>0 && cont_riga_1 <16) && (cont_riga_2 > 15 && cont_riga_2 < 32) && (cont_riga_3 > 31 && cont_riga_3 <48) && (cont_riga_4 > 47 && cont_riga_4 < 64)){
-            panel[cont_riga_1-1].setBackground(panel[cont_riga_1-1].getBackground().darker());
-            panel[cont_riga_2-1].setBackground(panel[cont_riga_2-1].getBackground().darker());
-            panel[cont_riga_3-1].setBackground(panel[cont_riga_3-1].getBackground().darker()); 
-            panel[cont_riga_4-1].setBackground(panel[cont_riga_4-1].getBackground().darker()); 
+            mydarker(cont_riga_1-1);
+            mydarker(cont_riga_2-1);
+            mydarker(cont_riga_3-1);
+            mydarker(cont_riga_4-1);
         }
 
         panel[cont_riga_1].setBackground(panel[cont_riga_1].getBackground().brighter());
@@ -339,6 +342,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         
         java.awt.Color c = panel[cont_riga_1].getBackground();
+        java.awt.Color c2 = panel[cont_riga_2].getBackground();
+        java.awt.Color c3 = panel[cont_riga_3].getBackground();
+        java.awt.Color c4 = panel[cont_riga_4].getBackground();
         //System.out.println("COLORE:"+c.getRGB());
         if(c.equals(new java.awt.Color(r1,g1,b1).brighter())){
             //System.out.println("PING!");
@@ -356,11 +362,91 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             }
         }
         
+        if(c2.equals(new java.awt.Color(r2,g2,b2).brighter())){
+            //System.out.println("PING!");
+            if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_2).getAbsoluteFile());
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+                } catch(Exception ex) {
+                    System.out.println("Error with playing sound.");
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
+        if(c3.equals(new java.awt.Color(r3,g3,b3).brighter())){
+            //System.out.println("PING!");
+            if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_1).getAbsoluteFile());
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+                } catch(Exception ex) {
+                    System.out.println("Error with playing sound.");
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
+        if(c4.equals(new java.awt.Color(r4,g4,b4).brighter())){
+            //System.out.println("PING!");
+            if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                
+                try {
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_4).getAbsoluteFile());
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioInputStream);
+                    clip.start();
+                } catch(Exception ex) {
+                    System.out.println("Error with playing sound.");
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
         cont_riga_1++;
         cont_riga_2++;
         cont_riga_3++;
         cont_riga_4++;
     
+    }
+    
+    //Metodo mydarker reimopsta i colori originali 
+    private void mydarker(int i){
+        if(i < 16){
+            if(panel[i].getBackground().equals(java.awt.Color.GRAY.brighter())){
+                panel[i].setBackground(java.awt.Color.GRAY);
+            }else{
+                panel[i].setBackground(new java.awt.Color(r1,g1,b1));
+            }
+        }
+        if(i < 32 && i > 15){
+            if(panel[i].getBackground().equals(java.awt.Color.GRAY.brighter())){
+                panel[i].setBackground(java.awt.Color.GRAY);
+            }else{
+                panel[i].setBackground(new java.awt.Color(r2,g2,b2));
+            }
+        }
+        if(i < 48 && i > 31){
+            if(panel[i].getBackground().equals(java.awt.Color.GRAY.brighter())){
+                panel[i].setBackground(java.awt.Color.GRAY);
+            }else{
+                panel[i].setBackground(new java.awt.Color(r3,g3,b3));
+            }
+        }       
+        if(i < 64 && i > 47){
+            if(panel[i].getBackground().equals(java.awt.Color.GRAY.brighter())){
+                panel[i].setBackground(java.awt.Color.GRAY);
+            }else{
+                panel[i].setBackground(new java.awt.Color(r4,g4,b4));
+            }
+        }
     }
     
     private void step_MouseClicked(MouseEvent evt) {
