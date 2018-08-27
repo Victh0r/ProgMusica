@@ -266,7 +266,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         play_button.setEnabled(false);
         stop_button.setEnabled(true);
         //istanzio Timer
-        tempoh = new Timer(500, new ActionListener(){
+        tempoh = new Timer(250, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 update_roba();
@@ -320,15 +320,21 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private void update_roba(){
         //Date cur = new Date();
         //bpm_label.setText(cur.toString());
-        if(cont_riga_1 >= 16 && cont_riga_2 >= 32 && cont_riga_3 >=48 && cont_riga_4 >=63){
+        System.out.println(cont_riga_1);
+        
+        if(cont_riga_1 == 16 && cont_riga_2 == 32 && cont_riga_3 ==48 && cont_riga_4 ==64){
+            mydarker(cont_riga_1-1);
             cont_riga_1 = 0;
+            mydarker(cont_riga_2-1);
             cont_riga_2 = 16;
+            mydarker(cont_riga_3-1);
             cont_riga_3 = 32;
-            cont_riga_4 = 48;   
+            mydarker(cont_riga_4-1);
+            cont_riga_4 = 48;
         }
         
         
-        if((cont_riga_1>0 && cont_riga_1 <16) && (cont_riga_2 > 15 && cont_riga_2 < 32) && (cont_riga_3 > 31 && cont_riga_3 <48) && (cont_riga_4 > 47 && cont_riga_4 < 64)){
+        if((cont_riga_1>0 && cont_riga_1 < 16) && (cont_riga_2 > 15 && cont_riga_2 < 32) && (cont_riga_3 > 31 && cont_riga_3 <48) && (cont_riga_4 > 47 && cont_riga_4 < 64)){
             mydarker(cont_riga_1-1);
             mydarker(cont_riga_2-1);
             mydarker(cont_riga_3-1);
@@ -414,6 +420,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         cont_riga_2++;
         cont_riga_3++;
         cont_riga_4++;
+        
     
     }
     
