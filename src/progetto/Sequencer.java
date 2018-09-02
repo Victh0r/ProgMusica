@@ -421,7 +421,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             if(sample_path_3 != null && !sample_path_3.isEmpty()){
                 
                 try {
-                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_1).getAbsoluteFile());
+                    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_3).getAbsoluteFile());
                     Clip clip = AudioSystem.getClip();
                     clip.open(audioInputStream);
                     clip.start();
