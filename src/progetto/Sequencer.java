@@ -9,7 +9,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -25,6 +28,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
@@ -150,6 +154,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         });
 
         save_button.setText("save pattern");
+        save_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_buttonActionPerformed(evt);
+            }
+        });
 
         import_button.setText("import pattern");
         import_button.addActionListener(new java.awt.event.ActionListener() {
@@ -309,10 +318,33 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private void reset_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_buttonActionPerformed
         // TODO add your handling code here:
         //Scorro tutti gli step e li imposto a grigio
-        for(int i=0; i<64; i++){
+        for(int i=0; i<panel.length; i++){
             panel[i].setBackground(java.awt.Color.GRAY);
         }
     }//GEN-LAST:event_reset_buttonActionPerformed
+
+    private void save_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_buttonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser save = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.txt", "txt");
+        save.setFileFilter(filter);
+        save.showSaveDialog(this);
+        File f = new File (save.getSelectedFile()+".txt");
+        try { 
+            FileWriter fw =new FileWriter(f);
+            BufferedWriter buf = new BufferedWriter(fw);
+            for(int i=0; i<panel.length; i++){
+                if(!(panel[i].getBackground().equals(java.awt.Color.GRAY))){
+                   buf.write(i+"-");
+                }
+            }
+            buf.flush();
+            buf.close();
+        } catch (IOException ex) {
+            System.out.println("Error with saving file.");
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_save_buttonActionPerformed
     
     //QUA DENTRO VA FATTO TUTTO:
     // 1) aggiornare i colori degli step
