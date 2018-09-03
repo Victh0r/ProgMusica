@@ -9,8 +9,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -267,6 +270,49 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
     private void import_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_buttonActionPerformed
         // TODO add your handling code here:
+        JFileChooser imp = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+        imp.setFileFilter(filter);
+        
+        int importato = imp.showOpenDialog(null);
+            
+        if(importato == JFileChooser.APPROVE_OPTION){
+            File f = imp.getSelectedFile();
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(f));
+                String line = in.readLine();
+                String[] arrline = line.split("-");
+                int step;
+                for(int i=0; i<arrline.length; i++){
+                    step =Integer.parseInt(arrline[i]);
+                    
+                    if(step < 16){
+                        panel[step].setBackground(new java.awt.Color(r1,g1,b1));
+                    }
+                    
+                    if(step > 15 && step < 32){
+                        panel[step].setBackground(new java.awt.Color(r2,g2,b2));
+                    }
+                    
+                    if(step > 31 && step < 48){
+                        panel[step].setBackground(new java.awt.Color(r3,g3,b3));
+                    }
+                    
+                    if(step > 47 && step < 64){
+                        panel[step].setBackground(new java.awt.Color(r4,g4,b4));
+                    }
+                    
+                }
+                
+            } catch (FileNotFoundException ex) {
+                System.out.println("File not found.");
+                ex.printStackTrace();
+            } catch (IOException ex) {
+               System.out.println("Error in file import.");
+               ex.printStackTrace();
+            }
+            
+        }
     }//GEN-LAST:event_import_buttonActionPerformed
 
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
@@ -352,7 +398,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private void update_roba(){
         //Date cur = new Date();
         //bpm_label.setText(cur.toString());
-        System.out.println(cont_riga_1);
         
         if(cont_riga_1 == 16 && cont_riga_2 == 32 && cont_riga_3 ==48 && cont_riga_4 ==64){
             mydarker(cont_riga_1-1);
