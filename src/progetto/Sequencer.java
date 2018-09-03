@@ -270,22 +270,25 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
     private void import_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_buttonActionPerformed
         // TODO add your handling code here:
-        JFileChooser imp = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+        JFileChooser imp = new JFileChooser(); //utilizzo il file chooser per gestire l'importazione dei file
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text"); // uso un filtro poichè i file importabili
+                                                                                                   // possono essere solo txt
         imp.setFileFilter(filter);
         
         int importato = imp.showOpenDialog(null);
-            
+        reset(); // una volta scelto il file faccio il reset di quello che eventualmente posso aver scrito sul sequencer   
+        
         if(importato == JFileChooser.APPROVE_OPTION){
             File f = imp.getSelectedFile();
             try {
                 BufferedReader in = new BufferedReader(new FileReader(f));
-                String line = in.readLine();
-                String[] arrline = line.split("-");
+                String line = in.readLine(); // leggo il file e salvo il contenuto in una stringa
+                String[] arrline = line.split("-"); // splitto il file per il carattere - e salvo il risultato in un array di stringhe
                 int step;
-                for(int i=0; i<arrline.length; i++){
+                for(int i=0; i<arrline.length; i++){ //scorro  tutto l'array di stringhe ed ogni stringa la converto in int che corrisponde 
+                                                     // all'indice del panel che deve essere illuminato
                     step =Integer.parseInt(arrline[i]);
-                    
+                    // Faccio i controlli per capire di che colore deve essere illuminato il panel[step]
                     if(step < 16){
                         panel[step].setBackground(new java.awt.Color(r1,g1,b1));
                     }
@@ -347,8 +350,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         cont_riga_3 = 32;
         cont_riga_4 = 48;
         
-        //Il ciclo dovrebbe eliminare la colonna luminosa dico dovrebbe perchè ci sono problemi con i brighter e darker, sembra che tolgano ed 
-        //Aggiungano valori diversi
         for(int i=0; i<16; i++){
             java.awt.Color c = panel[i].getBackground();
             //System.out.println("colore: "+i+"");
@@ -364,22 +365,31 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private void reset_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_buttonActionPerformed
         // TODO add your handling code here:
         //Scorro tutti gli step e li imposto a grigio
+        reset();
+    }//GEN-LAST:event_reset_buttonActionPerformed
+    
+    //Funzione Reset la faccio così perchè in questo modo posso richiamarla sia quando schiaccio reset_button sia quando faccio l'import
+    public void reset(){
         for(int i=0; i<panel.length; i++){
             panel[i].setBackground(java.awt.Color.GRAY);
         }
-    }//GEN-LAST:event_reset_buttonActionPerformed
-
+    }
+    
     private void save_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_buttonActionPerformed
         // TODO add your handling code here:
         JFileChooser save = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.txt", "txt");
         save.setFileFilter(filter);
+        
         save.showSaveDialog(this);
-        File f = new File (save.getSelectedFile()+".txt");
+        File f = new File (save.getSelectedFile()+".txt"); // in fase di salvataggio viene automaticamente aggiunta l'estensione del file 
+                                                           // da salvare
         try { 
-            FileWriter fw =new FileWriter(f);
+            FileWriter fw =new FileWriter(f); 
             BufferedWriter buf = new BufferedWriter(fw);
-            for(int i=0; i<panel.length; i++){
+            
+            for(int i=0; i<panel.length; i++){ //scorro tutti gli step e se lo step ha un colore che è diverso da grigio mi salvo il suo indice 
+                                               //su un file txt
                 if(!(panel[i].getBackground().equals(java.awt.Color.GRAY))){
                    buf.write(i+"-");
                 }
