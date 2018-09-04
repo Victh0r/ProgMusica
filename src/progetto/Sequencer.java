@@ -5,6 +5,7 @@
  */
 package progetto;
 
+import com.sun.glass.events.KeyEvent;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -146,6 +147,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         });
 
         bpm_field.setText("120");
+        bpm_field.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                bpm_fieldKeyTyped(evt);
+            }
+        });
 
         bpm_label.setText("<html><font color='white'>BPM</font></html>");
 
@@ -276,9 +282,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         imp.setFileFilter(filter);
         
         int importato = imp.showOpenDialog(null);
-        reset(); // una volta scelto il file faccio il reset di quello che eventualmente posso aver scrito sul sequencer   
+           
         
         if(importato == JFileChooser.APPROVE_OPTION){
+            reset(); // una volta scelto il file faccio il reset di quello che eventualmente posso aver scrito sul sequencer
             File f = imp.getSelectedFile();
             try {
                 BufferedReader in = new BufferedReader(new FileReader(f));
@@ -324,7 +331,13 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         play_button.setEnabled(false);
         stop_button.setEnabled(true);
         //istanzio Timer
-        tempoh = new Timer(250, new ActionListener(){
+        double bpm_d = Integer.parseInt(bpm_field.getText());
+        bpm_d = 60000/bpm_d;
+        int bpm_i = (int) Math.round(bpm_d);
+        
+        System.out.println(bpm_i);
+        
+        tempoh = new Timer(bpm_i, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 update_roba();
@@ -401,6 +414,14 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             ex.printStackTrace();
         }
     }//GEN-LAST:event_save_buttonActionPerformed
+
+    private void bpm_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bpm_fieldKeyTyped
+        // TODO add your handling code here:
+        char vchar = evt.getKeyChar();
+        if(!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACKSPACE) || (vchar == KeyEvent.VK_DELETE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_bpm_fieldKeyTyped
     
     //QUA DENTRO VA FATTO TUTTO:
     // 1) aggiornare i colori degli step
