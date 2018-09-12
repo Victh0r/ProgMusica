@@ -29,22 +29,21 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="play_button" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="stop_button" min="-2" max="-2" attributes="0"/>
+                      <Component id="play_button" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="stop_button" min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="bpm_label" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                      <Component id="bpm_field" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="161" max="32767" attributes="0"/>
-                      <Component id="reset_button" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="bpm_field" min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                      <Component id="reset_button" min="-2" pref="144" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="import_button" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="save_button" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="export_button" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -55,9 +54,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="Step_Panel" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,28 +64,32 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="play_button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="stop_button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bpm_field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bpm_label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="export_button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="save_button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="import_button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="reset_button" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="play_button" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
+                  <Component id="stop_button" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
+                  <Component id="reset_button" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="export_button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="save_button" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="import_button" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="bpm_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bpm_label" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="21" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="sample1_button" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Component id="sample1_button" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="sample2_button" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="sample3_button" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sample4_button" max="32767" attributes="0"/>
+                      <Component id="sample4_button" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Component id="Step_Panel" max="32767" attributes="0"/>
               </Group>
@@ -98,7 +101,12 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="play_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="PLAY"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/progetto/Img/play.png"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="play_buttonActionPerformed"/>
@@ -106,7 +114,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="stop_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="STOP"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/progetto/Img/stop.png"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stop_buttonActionPerformed"/>
@@ -127,7 +140,13 @@
     </Component>
     <Component class="javax.swing.JButton" name="export_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Export mp3"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/progetto/Img/Music-icon.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Audio Export&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="export_buttonActionPerformed"/>
@@ -135,7 +154,13 @@
     </Component>
     <Component class="javax.swing.JButton" name="save_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="save pattern"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/progetto/Img/upload-icon.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Save Pattern&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="save_buttonActionPerformed"/>
@@ -143,7 +168,13 @@
     </Component>
     <Component class="javax.swing.JButton" name="import_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="import pattern"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/progetto/Img/download-icon.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Import Pattern&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="import_buttonActionPerformed"/>
@@ -151,7 +182,13 @@
     </Component>
     <Component class="javax.swing.JButton" name="reset_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="reset pattern"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/progetto/Img/cross-3-icon.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Reset Pattern&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reset_buttonActionPerformed"/>
@@ -161,22 +198,34 @@
     </Component>
     <Component class="javax.swing.JButton" name="sample1_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sample 1"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Sample 1&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="sample2_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sample 2"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Sample 2&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="sample3_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sample 3"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Sample 3&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="sample4_button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Sample 4"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3a" green="37" red="35" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;font color=&apos;white&apos;&gt;Sample 4&lt;/font&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="Step_Panel">
@@ -184,12 +233,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="765" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="181" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="185" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
