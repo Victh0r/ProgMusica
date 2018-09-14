@@ -39,17 +39,15 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
-
-
-
 public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
+//**********************VARIABILI GLOBALI*********************************************************
+
+    //stringhe paths dei sample 
     private String sample_path_1;
     private String sample_path_2;
     private String sample_path_3;
     private String sample_path_4;
-    private ArrayList<JPanel> step_array;
     
     //colori delle file (quando vengono premuti i bottoni)
     int r1 = 186; int g1 = 35; int b1 = 35; //RIGA 1 PREMUTO
@@ -59,61 +57,59 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     int r4 = 68; int g4 = 237; int b4 = 225;
     
     JPanel panel[];
-    private Timer tempoh;
+    private Timer tempo;
+    
+    //insiemi di contatori per la gestione del sequencer
     private int cont_riga_1 = 0;
     private int cont_riga_2 = 16;
     private int cont_riga_3 = 32;
-    private int cont_riga_4 = 48;
-    
-    
+    private int cont_riga_4 = 48;    
+
+//***************************************************************************************************
     
     public Sequencer() {
         this.getContentPane().setBackground(new java.awt.Color(39, 43, 45));
         initComponents();
-              
         
-        
-        //****** sezione degli add ActionListener **********
+        stop_button.setEnabled(false);
         sample1_button.addActionListener(this);
         sample2_button.addActionListener(this);
         sample3_button.addActionListener(this);
         sample4_button.addActionListener(this);
         
-        
-        //****** end sezione add action Listener ************
-        
         Step_Panel.setBackground(new java.awt.Color(39, 43, 45));
         Step_Panel.setLayout(new GridLayout(4, 16));
-        //prova aggiunta con grid layout
+        
+        //Costruzione della griglia di step (grid layout consiste in un JPanel padre con tanti JPanel più piccoli figli)
         int cols = 16;
         int rows = 4;
         panel = new JPanel[cols*rows];
-        int boh = 0;
+        int cont = 0;
         
         for (int x = 0; x < rows; x++)
             for (int y = 0; y < cols; y++) {
                 //int i = (x * cols + y );
-                panel[boh] = new JPanel();
-                Step_Panel.add(panel[boh]);
+                panel[cont] = new JPanel();
+                Step_Panel.add(panel[cont]);
                 
-                panel[boh].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY));
-                panel[boh].setBackground(java.awt.Color.GRAY);
-                panel[boh].addMouseListener(new java.awt.event.MouseAdapter() {
+                panel[cont].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY));
+                panel[cont].setBackground(java.awt.Color.GRAY);
+                panel[cont].addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     step_MouseClicked(evt);
-                    }
-
-                   
+                    }                   
                 });
-                //utile per test
+            //******Sezione inutile ai fini applicativi pratici(numeriamo i vari step creati)-Utile ai fini di test*******
                 JLabel numero = new JLabel();
-                numero.setText(""+boh);
-                panel[boh].add(numero);
+                numero.setText(""+cont);
+                panel[cont].add(numero);
                 numero.setVisible(false);
-                boh++;           
+                cont++;    
+            //*************************************************************************************************************
             } 
     }
 
+//****************************CODICE GENERATO******************************************************************************
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -199,16 +195,16 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         });
 
         sample1_button.setBackground(new java.awt.Color(53, 55, 58));
-        sample1_button.setText("<html><font color='white'>Sample 1</font></html>");
+        sample1_button.setText("<html><font color='red'>Sample 1</font></html>");
 
         sample2_button.setBackground(new java.awt.Color(53, 55, 58));
-        sample2_button.setText("<html><font color='white'>Sample 2</font></html>");
+        sample2_button.setText("<html><font color='red'>Sample 2</font></html>");
 
         sample3_button.setBackground(new java.awt.Color(53, 55, 58));
-        sample3_button.setText("<html><font color='white'>Sample 3</font></html>");
+        sample3_button.setText("<html><font color='red'>Sample 3</font></html>");
 
         sample4_button.setBackground(new java.awt.Color(53, 55, 58));
-        sample4_button.setText("<html><font color='white'>Sample 4</font></html>");
+        sample4_button.setText("<html><font color='red'>Sample 4</font></html>");
 
         javax.swing.GroupLayout Step_PanelLayout = new javax.swing.GroupLayout(Step_Panel);
         Step_Panel.setLayout(Step_PanelLayout);
@@ -290,26 +286,25 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+//*************************************************************************************************************************
+    
+//************************************ACTION PERFORMED DEI BOTTONI*********************************************************
+    
     private void export_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_buttonActionPerformed
-        // TODO add your handling code here:
-        //System.out.println("EXPORT");
-        
-        
     }//GEN-LAST:event_export_buttonActionPerformed
 
     private void import_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_buttonActionPerformed
-        // TODO add your handling code here:
         JFileChooser imp = new JFileChooser(); //utilizzo il file chooser per gestire l'importazione dei file
         FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text"); // uso un filtro poichè i file importabili
                                                                                                    // possono essere solo txt
         imp.setFileFilter(filter);
         
         int importato = imp.showOpenDialog(null);
-           
-        
+          
         if(importato == JFileChooser.APPROVE_OPTION){
             reset(); // una volta scelto il file faccio il reset di quello che eventualmente posso aver scrito sul sequencer
             File f = imp.getSelectedFile();
+            
             try {
                 BufferedReader in = new BufferedReader(new FileReader(f));
                 String line = in.readLine(); // leggo il file e salvo il contenuto in una stringa
@@ -343,8 +338,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             } catch (IOException ex) {
                System.out.println("Error in file import.");
                ex.printStackTrace();
-            }
-            
+            }  
         }
     }//GEN-LAST:event_import_buttonActionPerformed
 
@@ -353,30 +347,28 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         reset_button.setEnabled(false);
         play_button.setEnabled(false);
         stop_button.setEnabled(true);
-        //istanzio Timer
+        
+        //istanzio Timer convertendo il campo BPM da BPM a millisecondi.utile per la sincronizzazione dell'esecuzione
         double bpm_d = Integer.parseInt(bpm_field.getText());
         bpm_d = 60000/bpm_d;
         int bpm_i = (int) Math.round(bpm_d);
         
-        System.out.println(bpm_i);
-        
-        tempoh = new Timer(bpm_i, new ActionListener(){
+        tempo = new Timer(bpm_i, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                update_roba();
+                exec();
             }
         
         });
-        tempoh.start();
-            
-               
+        
+        tempo.start();         
     }//GEN-LAST:event_play_buttonActionPerformed
 
     private void stop_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_buttonActionPerformed
-        
-        tempoh.stop();
+        tempo.stop();
         play_button.setEnabled(true);
         stop_button.setEnabled(false);
+        
         //non posso resettare il pattern durante l'esecuzione 
         reset_button.setEnabled(true);
         
@@ -399,20 +391,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     }//GEN-LAST:event_stop_buttonActionPerformed
 
     private void reset_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_buttonActionPerformed
-        // TODO add your handling code here:
         //Scorro tutti gli step e li imposto a grigio
         reset();
     }//GEN-LAST:event_reset_buttonActionPerformed
-    
-    //Funzione Reset la faccio così perchè in questo modo posso richiamarla sia quando schiaccio reset_button sia quando faccio l'import
-    public void reset(){
-        for(int i=0; i<panel.length; i++){
-            panel[i].setBackground(java.awt.Color.GRAY);
-        }
-    }
-    
+        
     private void save_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_buttonActionPerformed
-        // TODO add your handling code here:
         JFileChooser save = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.txt", "txt");
         save.setFileFilter(filter);
@@ -438,21 +421,27 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }//GEN-LAST:event_save_buttonActionPerformed
 
+//******************************FINE ACTION PERFORMED BOTTONI***************************************************************
+
+//******************************SEZIONE KEY TYPED***************************************************************************
+    
     private void bpm_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bpm_fieldKeyTyped
-        // TODO add your handling code here:
+        //in questo modo blocco ogni inserimento che non siano numeri nel campo BPM 
         char vchar = evt.getKeyChar();
         if(!(Character.isDigit(vchar)) || (vchar == KeyEvent.VK_BACKSPACE) || (vchar == KeyEvent.VK_DELETE)){
             evt.consume();
         }
     }//GEN-LAST:event_bpm_fieldKeyTyped
+
+//******************************FINE KEY TYPED******************************************************************************
+
+//******************************SEZIONE METODI AGGIUNTIVI*******************************************************************
     
-    //QUA DENTRO VA FATTO TUTTO:
-    // 1) aggiornare i colori degli step
-    // 2) play dei sample SE lo step è colorato
-    private void update_roba(){
-        //Date cur = new Date();
-        //bpm_label.setText(cur.toString());
-        
+    private void exec(){
+        //QUA DENTRO VA FATTO TUTTO:
+            // 1) aggiornare i colori degli step
+            // 2) play dei sample SE lo step è colorato
+            
         if(cont_riga_1 == 16 && cont_riga_2 == 32 && cont_riga_3 ==48 && cont_riga_4 ==64){
             mydarker(cont_riga_1-1);
             cont_riga_1 = 0;
@@ -463,7 +452,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             mydarker(cont_riga_4-1);
             cont_riga_4 = 48;
         }
-        
         
         if((cont_riga_1>0 && cont_riga_1 < 16) && (cont_riga_2 > 15 && cont_riga_2 < 32) && (cont_riga_3 > 31 && cont_riga_3 <48) && (cont_riga_4 > 47 && cont_riga_4 < 64)){
             mydarker(cont_riga_1-1);
@@ -477,16 +465,13 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         panel[cont_riga_3].setBackground(panel[cont_riga_3].getBackground().brighter());
         panel[cont_riga_4].setBackground(panel[cont_riga_4].getBackground().brighter());
         
-        
         java.awt.Color c = panel[cont_riga_1].getBackground();
         java.awt.Color c2 = panel[cont_riga_2].getBackground();
         java.awt.Color c3 = panel[cont_riga_3].getBackground();
         java.awt.Color c4 = panel[cont_riga_4].getBackground();
-        //System.out.println("COLORE:"+c.getRGB());
+        
         if(c.equals(new java.awt.Color(r1,g1,b1).brighter())){
-            //System.out.println("PING!");
             if(sample_path_1 != null && !sample_path_1.isEmpty()){
-                
                 try {
                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_1).getAbsoluteFile());
                     Clip clip = AudioSystem.getClip();
@@ -500,9 +485,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
         
         if(c2.equals(new java.awt.Color(r2,g2,b2).brighter())){
-            //System.out.println("PING!");
             if(sample_path_2 != null && !sample_path_2.isEmpty()){
-                
                 try {
                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_2).getAbsoluteFile());
                     Clip clip = AudioSystem.getClip();
@@ -516,9 +499,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
         
         if(c3.equals(new java.awt.Color(r3,g3,b3).brighter())){
-            //System.out.println("PING!");
-            if(sample_path_3 != null && !sample_path_3.isEmpty()){
-                
+            if(sample_path_3 != null && !sample_path_3.isEmpty()){ 
                 try {
                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_3).getAbsoluteFile());
                     Clip clip = AudioSystem.getClip();
@@ -532,9 +513,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
         
         if(c4.equals(new java.awt.Color(r4,g4,b4).brighter())){
-            //System.out.println("PING!");
             if(sample_path_4 != null && !sample_path_4.isEmpty()){
-                
                 try {
                     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sample_path_4).getAbsoluteFile());
                     Clip clip = AudioSystem.getClip();
@@ -546,13 +525,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 }
             }
         }
-        
         cont_riga_1++;
         cont_riga_2++;
         cont_riga_3++;
         cont_riga_4++;
-        
-    
     }
     
     //Metodo mydarker reimopsta i colori originali 
@@ -587,6 +563,13 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+    //Funzione Reset la faccio così perchè in questo modo posso richiamarla sia quando schiaccio reset_button sia quando faccio l'import
+    public void reset(){
+        for(int i=0; i<panel.length; i++){
+            panel[i].setBackground(java.awt.Color.GRAY);
+        }
+    }
+ 
     private void step_MouseClicked(MouseEvent evt) {
         if(evt.getSource() instanceof JPanel){
             JPanel step = (JPanel)evt.getSource();
@@ -618,10 +601,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                             System.out.println("Error with playing sound.");
                             ex.printStackTrace();
                         }
-                    }
-                    
-                    
+                    }    
                 }
+                
                 if(scelta < 32 && scelta > 15){
                     //SECONDA RIGA
                     step.setBackground(new java.awt.Color(r2,g2,b2));
@@ -638,6 +620,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                         }
                     }
                 }
+                
                 if(scelta < 48 && scelta > 31){
                     //TERZA RIGA
                     step.setBackground(new java.awt.Color(r3,g3,b3));
@@ -654,6 +637,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                         }
                     }
                 }
+                
                 if(scelta < 64 && scelta > 47){
                     //QUARTA RIGA
                     step.setBackground(new java.awt.Color(r4,g4,b4));
@@ -681,8 +665,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }   
     }
     
-    
-    
     @Override
     public void actionPerformed(ActionEvent ae) {
         //carica i Samples
@@ -699,8 +681,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 JButton butt = (JButton) ae.getSource();
                 if(parts[0].length() < 8 ){
                     butt.setText(parts[0]);
+                    butt.setForeground(java.awt.Color.GREEN);
                 }else{
                     butt.setText(parts[0].substring(0, 8));
+                    butt.setForeground(java.awt.Color.GREEN);
                 }
                 
                 
@@ -719,10 +703,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             }  
         }
     }
-        
-    /**
-     * @param args the command line arguments
-     */
+
+//*****************************FINE SEZIONE METODI AGGIUNTIVI***************************************************************
+         
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -771,6 +754,4 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton save_button;
     private javax.swing.JButton stop_button;
     // End of variables declaration//GEN-END:variables
-
-    
-}
+  }
