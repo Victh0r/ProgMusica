@@ -5,6 +5,14 @@
  */
 package progetto;
 
+import com.jsyn.JSyn;
+import com.jsyn.Synthesizer;
+import com.jsyn.data.FloatSample;
+import com.jsyn.unitgen.LineOut;
+import com.jsyn.unitgen.MixerStereo;
+import com.jsyn.unitgen.VariableRateMonoReader;
+import com.jsyn.util.SampleLoader;
+import com.jsyn.util.WaveRecorder;
 import com.sun.glass.events.KeyEvent;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -44,10 +52,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 //**********************VARIABILI GLOBALI*********************************************************
 
     //stringhe paths dei sample 
-    private String sample_path_1;
-    private String sample_path_2;
-    private String sample_path_3;
-    private String sample_path_4;
+    private String sample_path_1 = null;
+    private String sample_path_2 = null;
+    private String sample_path_3 = null;
+    private String sample_path_4 = null;
     
     //colori delle file (quando vengono premuti i bottoni)
     int r1 = 186; int g1 = 35; int b1 = 35; //RIGA 1 PREMUTO
@@ -77,6 +85,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         sample2_button.addActionListener(this);
         sample3_button.addActionListener(this);
         sample4_button.addActionListener(this);
+        
+        sample_path_1 = null;
+        sample_path_2 = null;
+        sample_path_3 = null;
+        sample_path_4 = null;
         
         export_button.addActionListener(new ActionListener(){
             @Override
@@ -434,6 +447,116 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     //esporta il pattern in un file audio
     public void exportAudio(){
         
+        File output = new File("export.wav");
+        
+        // Create a context for the synthesizer.
+        Synthesizer synth;
+        LineOut line;
+        
+        synth = JSyn.createSynthesizer();
+        synth.add(line = new LineOut());
+        synth.start();
+        line.start();
+        
+        File s1 = null,s2 = null ,s3 = null ,s4 = null; // samples...
+        FloatSample sample1 = null, sample2 = null, sample3 = null , sample4 = null;
+        VariableRateMonoReader samplePlayer1 = null, samplePlayer2 = null, samplePlayer3 = null, samplePlayer4 = null; 
+        
+        WaveRecorder record = null;
+        try {
+            record = new WaveRecorder(synth,output);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        MixerStereo mixer = new MixerStereo(2); 
+        synth.add(mixer); 
+        record.start();
+        
+        //controllo forzato
+        try{
+            if(sample_path_1 != null && !sample_path_1.isEmpty() ){
+            s1 = new File(sample_path_1);
+            sample1 = SampleLoader.loadFloatSample(s1);
+            samplePlayer1 = new VariableRateMonoReader();
+            synth.add(samplePlayer1);
+            
+            //per il primo sample
+            samplePlayer1.rate.set(sample1.getFrameRate());
+            samplePlayer1.output.connect(0, mixer.input, 0);
+            samplePlayer1.output.connect(0, mixer.input, 1);
+            //suona il campione...
+            samplePlayer1.dataQueue.queue(sample1);
+            
+            
+            }
+            if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                s2 = new File(sample_path_2);
+                sample2 = SampleLoader.loadFloatSample(s2);
+                samplePlayer2 = new VariableRateMonoReader();
+                synth.add(samplePlayer2);
+                
+                samplePlayer2.rate.set(sample2.getFrameRate());
+                samplePlayer2.output.connect(0, mixer.input, 0);
+                samplePlayer2.output.connect(0, mixer.input, 1);
+                //suona il campiona
+                samplePlayer2.dataQueue.queue(sample2);
+            }
+            if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                s3 = new File(sample_path_3);
+                sample3 = SampleLoader.loadFloatSample(s3);
+                samplePlayer3 = new VariableRateMonoReader();
+                synth.add(samplePlayer3);
+                
+                samplePlayer3.rate.set(sample3.getFrameRate());
+                samplePlayer3.output.connect(0, mixer.input, 0);
+                samplePlayer3.output.connect(0, mixer.input, 1);
+                samplePlayer3.dataQueue.queue(sample3);
+            }
+            if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                s4 = new File(sample_path_4);
+                sample4 = SampleLoader.loadFloatSample(s4);
+                samplePlayer4 = new VariableRateMonoReader();
+                synth.add(samplePlayer4);
+                
+                samplePlayer4.rate.set(sample4.getFrameRate());
+                samplePlayer4.output.connect(0, mixer.input, 0);
+                samplePlayer4.output.connect(0, mixer.input, 1);
+                samplePlayer4.dataQueue.queue(sample4);
+            }
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        
+        //questo prende l'output di tutto e lo registra nel file finale
+        mixer.output.connect(0, record.getInput(), 0);
+        mixer.output.connect(1, record.getInput(), 1);
+         //questo lo suona mentre esegue il programma
+        mixer.output.connect(0, line.input, 0);
+        mixer.output.connect(1, line.input, 1);
+        
+        
+        //ulteriore controllo...
+
+        do {
+            try {
+                synth.sleepFor(1.0);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } while ((samplePlayer1!=null && samplePlayer1.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer2.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer3.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer4.dataQueue.hasMore()));
+        record.stop();
+        try {
+            record.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        synth.stop();
+        
+        
+        
+        
     }
     
 //******************************FINE ACTION PERFORMED BOTTONI***************************************************************
@@ -705,8 +828,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 }
                 
                 
-                 if(ae.getSource() == sample1_button){
-                sample_path_1 = path;
+                if(ae.getSource() == sample1_button){
+                    sample_path_1 = path;
                 }    
                 if(ae.getSource() == sample2_button){
                     sample_path_2 = path;

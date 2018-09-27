@@ -83,7 +83,7 @@ public class Progetto{
             samplePlayer.rate.set(sample.getFrameRate());
             samplePlayer.output.connect(0, mixer.input, 0);
             samplePlayer.output.connect(0, mixer.input, 1);
-            samplePlayer.dataQueue.queue(sample);
+            //samplePlayer.dataQueue.queue(sample);
             
             
             //per il seconodo sample
