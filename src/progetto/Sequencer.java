@@ -70,12 +70,22 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     public Sequencer() {
         this.getContentPane().setBackground(new java.awt.Color(39, 43, 45));
         initComponents();
+        this.setTitle("Super Sequencer");
         
         stop_button.setEnabled(false);
         sample1_button.addActionListener(this);
         sample2_button.addActionListener(this);
         sample3_button.addActionListener(this);
         sample4_button.addActionListener(this);
+        
+        export_button.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                exportAudio();
+            }
+            
+        });
+        
         
         Step_Panel.setBackground(new java.awt.Color(39, 43, 45));
         Step_Panel.setLayout(new GridLayout(4, 16));
@@ -161,11 +171,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         export_button.setBackground(new java.awt.Color(53, 55, 58));
         export_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/progetto/Img/Music-icon.png"))); // NOI18N
         export_button.setText("<html><font color='white'>Audio Export</font></html>");
-        export_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                export_buttonActionPerformed(evt);
-            }
-        });
 
         save_button.setBackground(new java.awt.Color(53, 55, 58));
         save_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/progetto/Img/upload-icon.png"))); // NOI18N
@@ -214,7 +219,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         );
         Step_PanelLayout.setVerticalGroup(
             Step_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 185, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -286,13 +291,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-//*************************************************************************************************************************
     
-//************************************ACTION PERFORMED DEI BOTTONI*********************************************************
     
-    private void export_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_buttonActionPerformed
-    }//GEN-LAST:event_export_buttonActionPerformed
-
+    
     private void import_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_buttonActionPerformed
         JFileChooser imp = new JFileChooser(); //utilizzo il file chooser per gestire l'importazione dei file
         FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text"); // uso un filtro poichè i file importabili
@@ -348,6 +349,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         play_button.setEnabled(false);
         stop_button.setEnabled(true);
         
+        //disattiva operazioni sui file
+        import_button.setEnabled(false);
+        save_button.setEnabled(false);
+        
         //istanzio Timer convertendo il campo BPM da BPM a millisecondi.utile per la sincronizzazione dell'esecuzione
         double bpm_d = Integer.parseInt(bpm_field.getText());
         bpm_d = 60000/bpm_d;
@@ -356,7 +361,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         tempo = new Timer(bpm_i, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                exec();
+                playSequencer();
             }
         
         });
@@ -368,6 +373,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         tempo.stop();
         play_button.setEnabled(true);
         stop_button.setEnabled(false);
+        
+        //riattiva le operazioni sui file
+        import_button.setEnabled(true);
+        save_button.setEnabled(true);
+        
         
         //non posso resettare il pattern durante l'esecuzione 
         reset_button.setEnabled(true);
@@ -421,6 +431,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }//GEN-LAST:event_save_buttonActionPerformed
 
+    //esporta il pattern in un file audio
+    public void exportAudio(){
+        
+    }
+    
 //******************************FINE ACTION PERFORMED BOTTONI***************************************************************
 
 //******************************SEZIONE KEY TYPED***************************************************************************
@@ -437,7 +452,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
 //******************************SEZIONE METODI AGGIUNTIVI*******************************************************************
     
-    private void exec(){
+    private void playSequencer(){
         //QUA DENTRO VA FATTO TUTTO:
             // 1) aggiornare i colori degli step
             // 2) play dei sample SE lo step è colorato
@@ -665,6 +680,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }   
     }
     
+    
+    //codice per i sampleLoader
     @Override
     public void actionPerformed(ActionEvent ae) {
         //carica i Samples
