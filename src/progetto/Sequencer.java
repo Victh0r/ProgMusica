@@ -72,6 +72,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     private int cont_riga_2 = 16;
     private int cont_riga_3 = 32;
     private int cont_riga_4 = 48;    
+    private int barbone=0;
 
 //***************************************************************************************************
     
@@ -446,33 +447,38 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
     //esporta il pattern in un file audio
     public void exportAudio(){
+        JFileChooser save = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.wav", "wav");
+        save.setFileFilter(filter);
         
-        File output = new File("export.wav");
+        save.showSaveDialog(this);
+        File output = new File (save.getSelectedFile()+".wav");
         
+               
         // Create a context for the synthesizer.
         Synthesizer synth;
         LineOut line;
-        
+
         synth = JSyn.createSynthesizer();
         synth.add(line = new LineOut());
         synth.start();
         line.start();
-        
+
         File s1 = null,s2 = null ,s3 = null ,s4 = null; // samples...
         FloatSample sample1 = null, sample2 = null, sample3 = null , sample4 = null;
         VariableRateMonoReader samplePlayer1 = null, samplePlayer2 = null, samplePlayer3 = null, samplePlayer4 = null; 
-        
+
         WaveRecorder record = null;
         try {
             record = new WaveRecorder(synth,output);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         MixerStereo mixer = new MixerStereo(2); 
         synth.add(mixer); 
         record.start();
-        
+
         //controllo forzato
         try{
             if(sample_path_1 != null && !sample_path_1.isEmpty() ){
@@ -480,66 +486,116 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             sample1 = SampleLoader.loadFloatSample(s1);
             samplePlayer1 = new VariableRateMonoReader();
             synth.add(samplePlayer1);
-            
+
             //per il primo sample
             samplePlayer1.rate.set(sample1.getFrameRate());
             samplePlayer1.output.connect(0, mixer.input, 0);
             samplePlayer1.output.connect(0, mixer.input, 1);
             //suona il campione...
-            samplePlayer1.dataQueue.queue(sample1);
-            
-            
+            //samplePlayer1.dataQueue.queue(sample1);
+
+
             }
             if(sample_path_2 != null && !sample_path_2.isEmpty()){
                 s2 = new File(sample_path_2);
                 sample2 = SampleLoader.loadFloatSample(s2);
                 samplePlayer2 = new VariableRateMonoReader();
                 synth.add(samplePlayer2);
-                
+
                 samplePlayer2.rate.set(sample2.getFrameRate());
                 samplePlayer2.output.connect(0, mixer.input, 0);
                 samplePlayer2.output.connect(0, mixer.input, 1);
                 //suona il campiona
-                samplePlayer2.dataQueue.queue(sample2);
+                //samplePlayer2.dataQueue.queue(sample2);
             }
             if(sample_path_3 != null && !sample_path_3.isEmpty()){
                 s3 = new File(sample_path_3);
                 sample3 = SampleLoader.loadFloatSample(s3);
                 samplePlayer3 = new VariableRateMonoReader();
                 synth.add(samplePlayer3);
-                
+
                 samplePlayer3.rate.set(sample3.getFrameRate());
                 samplePlayer3.output.connect(0, mixer.input, 0);
                 samplePlayer3.output.connect(0, mixer.input, 1);
-                samplePlayer3.dataQueue.queue(sample3);
+                //samplePlayer3.dataQueue.queue(sample3);
             }
             if(sample_path_4 != null && !sample_path_4.isEmpty()){
                 s4 = new File(sample_path_4);
                 sample4 = SampleLoader.loadFloatSample(s4);
                 samplePlayer4 = new VariableRateMonoReader();
                 synth.add(samplePlayer4);
-                
+
                 samplePlayer4.rate.set(sample4.getFrameRate());
                 samplePlayer4.output.connect(0, mixer.input, 0);
                 samplePlayer4.output.connect(0, mixer.input, 1);
-                samplePlayer4.dataQueue.queue(sample4);
+                //samplePlayer4.dataQueue.queue(sample4);
             }
-            
+
         }catch(IOException e){
             e.printStackTrace();
         }
-        
-        //questo prende l'output di tutto e lo registra nel file finale
-        mixer.output.connect(0, record.getInput(), 0);
-        mixer.output.connect(1, record.getInput(), 1);
-         //questo lo suona mentre esegue il programma
-        mixer.output.connect(0, line.input, 0);
-        mixer.output.connect(1, line.input, 1);
-        
-        
-        //ulteriore controllo...
 
-        do {
+        double bpm_d = Integer.parseInt(bpm_field.getText());
+        bpm_d = 60000/bpm_d;
+        int bpm_i = (int) Math.round(bpm_d);
+                
+        try { 
+            FileWriter fw =new FileWriter(output); 
+            BufferedWriter buf = new BufferedWriter(fw);
+
+            for(int i=0; i<16; i++){
+                //Tra un esecuzione e l'altra del ciclo faccio dormire il Thread per la durata indicata nel bpm
+                try {
+                    Thread.sleep(bpm_i);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                java.awt.Color c = panel[i].getBackground();
+                java.awt.Color c2 = panel[i+16].getBackground();
+                java.awt.Color c3 = panel[i+32].getBackground();
+                java.awt.Color c4 = panel[i+48].getBackground();
+                if(c.equals(new java.awt.Color(r1,g1,b1))){
+                    if(sample_path_1 != null && !sample_path_1.isEmpty()){
+                        samplePlayer1.dataQueue.queue(sample1);
+                        System.out.println(i);
+                    }
+                }
+                if(c2.equals(new java.awt.Color(r2,g2,b2))){
+                    if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                        samplePlayer2.dataQueue.queue(sample2);
+                        System.out.println(i+16);
+                    }
+                }
+                if(c3.equals(new java.awt.Color(r3,g3,b3))){
+                    if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                        samplePlayer3.dataQueue.queue(sample3);
+                        System.out.println(i+32);
+                    }
+                }
+                if(c4.equals(new java.awt.Color(r4,g4,b4))){
+                    if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                        samplePlayer4.dataQueue.queue(sample4);
+                        System.out.println(i+48);
+                    }
+                }
+                //questo prende l'output di tutto e lo registra nel file finale
+                mixer.output.connect(0, record.getInput(), 0);
+                mixer.output.connect(1, record.getInput(), 1);
+                //questo lo suona mentre esegue il programma
+                mixer.output.connect(0, line.input, 0);
+                mixer.output.connect(1, line.input, 1);
+            }
+                
+            buf.flush();
+            buf.close();
+        }catch (IOException ex) {
+            System.out.println("Error with saving file.");
+            ex.printStackTrace();
+        }
+
+        //ulteriore controllo...
+         do {
             try {
                 synth.sleepFor(1.0);
             } catch (InterruptedException ex) {
@@ -552,12 +608,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         } catch (IOException ex) {
             Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        synth.stop();
+        synth.stop(); 
+                
+    }   
         
-        
-        
-        
-    }
     
 //******************************FINE ACTION PERFORMED BOTTONI***************************************************************
 
