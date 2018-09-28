@@ -493,8 +493,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             samplePlayer1.output.connect(0, mixer.input, 1);
             //suona il campione...
             //samplePlayer1.dataQueue.queue(sample1);
-
-
             }
             if(sample_path_2 != null && !sample_path_2.isEmpty()){
                 s2 = new File(sample_path_2);
@@ -545,36 +543,34 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
             for(int i=0; i<16; i++){
                 //Tra un esecuzione e l'altra del ciclo faccio dormire il Thread per la durata indicata nel bpm
-                try {
-                    Thread.sleep(bpm_i);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
                 java.awt.Color c = panel[i].getBackground();
                 java.awt.Color c2 = panel[i+16].getBackground();
                 java.awt.Color c3 = panel[i+32].getBackground();
                 java.awt.Color c4 = panel[i+48].getBackground();
                 if(c.equals(new java.awt.Color(r1,g1,b1))){
                     if(sample_path_1 != null && !sample_path_1.isEmpty()){
+                        samplePlayer1.amplitude.set(0.25);
                         samplePlayer1.dataQueue.queue(sample1);
                         System.out.println(i);
                     }
                 }
                 if(c2.equals(new java.awt.Color(r2,g2,b2))){
                     if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                        samplePlayer2.amplitude.set(0.25);
                         samplePlayer2.dataQueue.queue(sample2);
                         System.out.println(i+16);
                     }
                 }
                 if(c3.equals(new java.awt.Color(r3,g3,b3))){
                     if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                        samplePlayer3.amplitude.set(0.25);
                         samplePlayer3.dataQueue.queue(sample3);
                         System.out.println(i+32);
                     }
                 }
                 if(c4.equals(new java.awt.Color(r4,g4,b4))){
                     if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                        samplePlayer4.amplitude.set(0.25);
                         samplePlayer4.dataQueue.queue(sample4);
                         System.out.println(i+48);
                     }
@@ -585,10 +581,16 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 //questo lo suona mentre esegue il programma
                 mixer.output.connect(0, line.input, 0);
                 mixer.output.connect(1, line.input, 1);
+                try {
+                    Thread.sleep(bpm_i);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
                 
             buf.flush();
             buf.close();
+            
         }catch (IOException ex) {
             System.out.println("Error with saving file.");
             ex.printStackTrace();
