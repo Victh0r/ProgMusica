@@ -84,10 +84,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         initComponents();
         this.setTitle("Super Sequencer");
         
-        
-        
-        
-        
         stop_button.setEnabled(false);
         sample1_button.addActionListener(this);
         sample2_button.addActionListener(this);
@@ -453,7 +449,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         //save.showSaveDialog(this);
         int salvato = save.showSaveDialog(this);
         
-        
         if(salvato == JFileChooser.APPROVE_OPTION){
             File output = new File (save.getSelectedFile()+".wav");
             
@@ -549,8 +544,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             int bpm_i = (int) Math.round(bpm_d);
 
             try { 
-                FileWriter fw =new FileWriter(output); 
-                BufferedWriter buf = new BufferedWriter(fw);
+                //FileWriter fw =new FileWriter(output); 
+                //BufferedWriter buf = new BufferedWriter(fw);
 
 
                 for(int i=0; i<16; i++){
@@ -601,10 +596,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                     }
                 }
 
-                buf.flush();
-                buf.close();
+                //buf.flush();
+                //buf.close();
 
-            }catch (IOException ex) {
+            }catch (Exception ex) {
                 System.out.println("Error with saving file.");
                 ex.printStackTrace();
             }
