@@ -14,6 +14,7 @@ import com.jsyn.unitgen.VariableRateMonoReader;
 import com.jsyn.util.SampleLoader;
 import com.jsyn.util.WaveRecorder;
 import com.sun.glass.events.KeyEvent;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,9 +42,13 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ProgressMonitor;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -51,7 +56,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
 
 //**********************VARIABILI GLOBALI*********************************************************
 
-    //stringhe paths dei sample 
+    //percorsi dei file dei sample 
     private String sample_path_1 = null;
     private String sample_path_2 = null;
     private String sample_path_3 = null;
@@ -59,27 +64,29 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     
     //colori delle file (quando vengono premuti i bottoni)
     int r1 = 186; int g1 = 35; int b1 = 35; //RIGA 1 PREMUTO
-    int r1P = 252; int g1P = 88; int b1P = 88; //RIGA 1 QUANDO PASSA IL COSO
     int r2 = 130; int g2 = 40; int b2 = 119;
     int r3 = 240; int g3 = 252; int b3 = 106;
     int r4 = 68; int g4 = 237; int b4 = 225;
     
     JPanel panel[];
     private Timer tempo;
+    private JDialog dialog;
     
     //insiemi di contatori per la gestione del sequencer
     private int cont_riga_1 = 0;
     private int cont_riga_2 = 16;
     private int cont_riga_3 = 32;
     private int cont_riga_4 = 48;    
-    private int barbone=0;
-
 //***************************************************************************************************
     
     public Sequencer() {
         this.getContentPane().setBackground(new java.awt.Color(39, 43, 45));
         initComponents();
         this.setTitle("Super Sequencer");
+        
+        
+        
+        
         
         stop_button.setEnabled(false);
         sample1_button.addActionListener(this);
@@ -97,9 +104,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 exportAudio();
             }
-            
         });
-        
         
         Step_Panel.setBackground(new java.awt.Color(39, 43, 45));
         Step_Panel.setLayout(new GridLayout(4, 16));
@@ -112,10 +117,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         for (int x = 0; x < rows; x++)
             for (int y = 0; y < cols; y++) {
-                //int i = (x * cols + y );
                 panel[cont] = new JPanel();
                 Step_Panel.add(panel[cont]);
-                
                 panel[cont].setBorder(BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY));
                 panel[cont].setBackground(java.awt.Color.GRAY);
                 panel[cont].addMouseListener(new java.awt.event.MouseAdapter() {
@@ -123,7 +126,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                     step_MouseClicked(evt);
                     }                   
                 });
-            //******Sezione inutile ai fini applicativi pratici(numeriamo i vari step creati)-Utile ai fini di test*******
+            //******utile per tests....*******
                 JLabel numero = new JLabel();
                 numero.setText(""+cont);
                 panel[cont].add(numero);
@@ -307,9 +310,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
     
     
     
-    
+    //IMPORT PATTERN
     private void import_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_buttonActionPerformed
-        JFileChooser imp = new JFileChooser(); //utilizzo il file chooser per gestire l'importazione dei file
+        JFileChooser imp = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text"); // uso un filtro poichè i file importabili
                                                                                                    // possono essere solo txt
         imp.setFileFilter(filter);
@@ -322,31 +325,25 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             
             try {
                 BufferedReader in = new BufferedReader(new FileReader(f));
-                String line = in.readLine(); // leggo il file e salvo il contenuto in una stringa
-                String[] arrline = line.split("-"); // splitto il file per il carattere - e salvo il risultato in un array di stringhe
+                String line = in.readLine();
+                String[] arrline = line.split("-");
                 int step;
-                for(int i=0; i<arrline.length; i++){ //scorro  tutto l'array di stringhe ed ogni stringa la converto in int che corrisponde 
-                                                     // all'indice del panel che deve essere illuminato
+                for(int i=0; i<arrline.length; i++){ 
                     step =Integer.parseInt(arrline[i]);
                     // Faccio i controlli per capire di che colore deve essere illuminato il panel[step]
                     if(step < 16){
                         panel[step].setBackground(new java.awt.Color(r1,g1,b1));
                     }
-                    
                     if(step > 15 && step < 32){
                         panel[step].setBackground(new java.awt.Color(r2,g2,b2));
                     }
-                    
                     if(step > 31 && step < 48){
                         panel[step].setBackground(new java.awt.Color(r3,g3,b3));
                     }
-                    
                     if(step > 47 && step < 64){
                         panel[step].setBackground(new java.awt.Color(r4,g4,b4));
-                    }
-                    
+                    }  
                 }
-                
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found.");
                 ex.printStackTrace();
@@ -357,8 +354,8 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }//GEN-LAST:event_import_buttonActionPerformed
 
+    //PLAY DEL PATTERN
     private void play_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_buttonActionPerformed
-        //RIPRODUZIONE musicale
         reset_button.setEnabled(false);
         play_button.setEnabled(false);
         stop_button.setEnabled(true);
@@ -366,12 +363,13 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         //disattiva operazioni sui file
         import_button.setEnabled(false);
         save_button.setEnabled(false);
+        export_button.setEnabled(false);
         
-        //istanzio Timer convertendo il campo BPM da BPM a millisecondi.utile per la sincronizzazione dell'esecuzione
         double bpm_d = Integer.parseInt(bpm_field.getText());
         bpm_d = 60000/bpm_d;
         int bpm_i = (int) Math.round(bpm_d);
         
+        //temporizzazione dell'esecuzione.
         tempo = new Timer(bpm_i, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -379,24 +377,23 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             }
         
         });
-        
         tempo.start();         
     }//GEN-LAST:event_play_buttonActionPerformed
 
+    
+    //STOP sequencer
     private void stop_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stop_buttonActionPerformed
         tempo.stop();
         play_button.setEnabled(true);
         stop_button.setEnabled(false);
+        reset_button.setEnabled(true);
         
         //riattiva le operazioni sui file
         import_button.setEnabled(true);
         save_button.setEnabled(true);
+        export_button.setEnabled(true);
         
-        
-        //non posso resettare il pattern durante l'esecuzione 
-        reset_button.setEnabled(true);
-        
-        //Ripristino i contatori originali per far ripartire l'esecuzione da capo dopo il play dall'inizio
+        //ripristino contatori
         cont_riga_1 = 0;
         cont_riga_2 = 16;
         cont_riga_3 = 32;
@@ -404,8 +401,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         
         for(int i=0; i<16; i++){
             java.awt.Color c = panel[i].getBackground();
-            //System.out.println("colore: "+i+"");
-            if(c.equals(java.awt.Color.GRAY.brighter()) || c.equals(new java.awt.Color(r1, g1, b1).brighter()) || c.equals(new java.awt.Color(r2, g2, b2).brighter()) || c.equals(new java.awt.Color(r3, g3, b3).brighter()) || c.equals(new java.awt.Color(r4, g4, b4).brighter())){
+            if(c.equals(java.awt.Color.GRAY.brighter()) || c.equals(new java.awt.Color(r1, g1, b1).brighter())
+                    || c.equals(new java.awt.Color(r2, g2, b2).brighter()) 
+                    || c.equals(new java.awt.Color(r3, g3, b3).brighter()) 
+                    || c.equals(new java.awt.Color(r4, g4, b4).brighter())){
                 mydarker(i);
                 mydarker(i+16);
                 mydarker(i+32);
@@ -419,18 +418,17 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         reset();
     }//GEN-LAST:event_reset_buttonActionPerformed
         
+    //SALVATAGGIO PATTERN
     private void save_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_buttonActionPerformed
         JFileChooser save = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.txt", "txt");
         save.setFileFilter(filter);
         
         save.showSaveDialog(this);
-        File f = new File (save.getSelectedFile()+".txt"); // in fase di salvataggio viene automaticamente aggiunta l'estensione del file 
-                                                           // da salvare
+        File f = new File (save.getSelectedFile()+".txt");
         try { 
             FileWriter fw =new FileWriter(f); 
             BufferedWriter buf = new BufferedWriter(fw);
-            
             for(int i=0; i<panel.length; i++){ //scorro tutti gli step e se lo step ha un colore che è diverso da grigio mi salvo il suo indice 
                                                //su un file txt
                 if(!(panel[i].getBackground().equals(java.awt.Color.GRAY))){
@@ -445,180 +443,197 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }//GEN-LAST:event_save_buttonActionPerformed
 
-    //esporta il pattern in un file audio
+   
+    //ESPORTA LA PERFORMANCE MUSICALE in un file wav
     public void exportAudio(){
         JFileChooser save = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.wav", "wav");
         save.setFileFilter(filter);
         
-        save.showSaveDialog(this);
-        File output = new File (save.getSelectedFile()+".wav");
+        //save.showSaveDialog(this);
+        int salvato = save.showSaveDialog(this);
         
-               
-        // Create a context for the synthesizer.
-        Synthesizer synth;
-        LineOut line;
+        
+        if(salvato == JFileChooser.APPROVE_OPTION){
+            File output = new File (save.getSelectedFile()+".wav");
+            
+            //problema: non fa vedere il contenuto della dialog fino a quando non finisce questo metodo..
+            dialog = new JDialog(this, "Esportazione in corso...", false);
+            dialog.setLayout(new FlowLayout());
+            //dialog.add(new JLabel("Esportato con successo!"));
+            dialog.setSize(300,140);
+            dialog.setLocation(300, 100);
+            dialog.setVisible(true);
+            
+            
+            Synthesizer synth;
+            LineOut line;
 
-        synth = JSyn.createSynthesizer();
-        synth.add(line = new LineOut());
-        synth.start();
-        line.start();
+            synth = JSyn.createSynthesizer();
+            synth.add(line = new LineOut());
+            synth.start();
+            line.start();
 
-        File s1 = null,s2 = null ,s3 = null ,s4 = null; // samples...
-        FloatSample sample1 = null, sample2 = null, sample3 = null , sample4 = null;
-        VariableRateMonoReader samplePlayer1 = null, samplePlayer2 = null, samplePlayer3 = null, samplePlayer4 = null; 
+            File s1 = null,s2 = null ,s3 = null ,s4 = null; // percorso samples...
+            FloatSample sample1 = null, sample2 = null, sample3 = null , sample4 = null; 
+            VariableRateMonoReader samplePlayer1 = null, samplePlayer2 = null, samplePlayer3 = null, samplePlayer4 = null; //per riprodurre i sample in jsyn...
 
-        WaveRecorder record = null;
-        try {
-            record = new WaveRecorder(synth,output);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        MixerStereo mixer = new MixerStereo(2); 
-        synth.add(mixer); 
-        record.start();
-
-        //controllo forzato
-        try{
-            if(sample_path_1 != null && !sample_path_1.isEmpty() ){
-            s1 = new File(sample_path_1);
-            sample1 = SampleLoader.loadFloatSample(s1);
-            samplePlayer1 = new VariableRateMonoReader();
-            synth.add(samplePlayer1);
-
-            //per il primo sample
-            samplePlayer1.rate.set(sample1.getFrameRate());
-            samplePlayer1.output.connect(0, mixer.input, 0);
-            samplePlayer1.output.connect(0, mixer.input, 1);
-            //suona il campione...
-            //samplePlayer1.dataQueue.queue(sample1);
-            }
-            if(sample_path_2 != null && !sample_path_2.isEmpty()){
-                s2 = new File(sample_path_2);
-                sample2 = SampleLoader.loadFloatSample(s2);
-                samplePlayer2 = new VariableRateMonoReader();
-                synth.add(samplePlayer2);
-
-                samplePlayer2.rate.set(sample2.getFrameRate());
-                samplePlayer2.output.connect(0, mixer.input, 0);
-                samplePlayer2.output.connect(0, mixer.input, 1);
-                //suona il campiona
-                //samplePlayer2.dataQueue.queue(sample2);
-            }
-            if(sample_path_3 != null && !sample_path_3.isEmpty()){
-                s3 = new File(sample_path_3);
-                sample3 = SampleLoader.loadFloatSample(s3);
-                samplePlayer3 = new VariableRateMonoReader();
-                synth.add(samplePlayer3);
-
-                samplePlayer3.rate.set(sample3.getFrameRate());
-                samplePlayer3.output.connect(0, mixer.input, 0);
-                samplePlayer3.output.connect(0, mixer.input, 1);
-                //samplePlayer3.dataQueue.queue(sample3);
-            }
-            if(sample_path_4 != null && !sample_path_4.isEmpty()){
-                s4 = new File(sample_path_4);
-                sample4 = SampleLoader.loadFloatSample(s4);
-                samplePlayer4 = new VariableRateMonoReader();
-                synth.add(samplePlayer4);
-
-                samplePlayer4.rate.set(sample4.getFrameRate());
-                samplePlayer4.output.connect(0, mixer.input, 0);
-                samplePlayer4.output.connect(0, mixer.input, 1);
-                //samplePlayer4.dataQueue.queue(sample4);
+            WaveRecorder record = null; //modulo che registra in file qualsiasi cosa
+            try {
+                record = new WaveRecorder(synth,output);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+            MixerStereo mixer = new MixerStereo(2); 
+            synth.add(mixer); 
+            record.start();
 
-        double bpm_d = Integer.parseInt(bpm_field.getText());
-        bpm_d = 60000/bpm_d;
-        int bpm_i = (int) Math.round(bpm_d);
-                
-        try { 
-            FileWriter fw =new FileWriter(output); 
-            BufferedWriter buf = new BufferedWriter(fw);
+            //controllo per vedere se ho dei samples caricati
+            try{
+                if(sample_path_1 != null && !sample_path_1.isEmpty() ){
+                    //per il primo sample
+                    s1 = new File(sample_path_1);
+                    sample1 = SampleLoader.loadFloatSample(s1);
+                    samplePlayer1 = new VariableRateMonoReader();
+                    synth.add(samplePlayer1);
 
-            for(int i=0; i<16; i++){
-                //Tra un esecuzione e l'altra del ciclo faccio dormire il Thread per la durata indicata nel bpm
-                java.awt.Color c = panel[i].getBackground();
-                java.awt.Color c2 = panel[i+16].getBackground();
-                java.awt.Color c3 = panel[i+32].getBackground();
-                java.awt.Color c4 = panel[i+48].getBackground();
-                if(c.equals(new java.awt.Color(r1,g1,b1))){
-                    if(sample_path_1 != null && !sample_path_1.isEmpty()){
-                        samplePlayer1.amplitude.set(0.25);
-                        samplePlayer1.dataQueue.queue(sample1);
-                        System.out.println(i);
+
+                    samplePlayer1.rate.set(sample1.getFrameRate());
+                    samplePlayer1.output.connect(0, mixer.input, 0);
+                    samplePlayer1.output.connect(0, mixer.input, 1);
+                    //suona il campione...
+                    //samplePlayer1.dataQueue.queue(sample1);
+                }
+                if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                    s2 = new File(sample_path_2);
+                    sample2 = SampleLoader.loadFloatSample(s2);
+                    samplePlayer2 = new VariableRateMonoReader();
+                    synth.add(samplePlayer2);
+
+                    samplePlayer2.rate.set(sample2.getFrameRate());
+                    samplePlayer2.output.connect(0, mixer.input, 0);
+                    samplePlayer2.output.connect(0, mixer.input, 1);
+                    //suona il campiona
+                    //samplePlayer2.dataQueue.queue(sample2);
+                }
+                if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                    s3 = new File(sample_path_3);
+                    sample3 = SampleLoader.loadFloatSample(s3);
+                    samplePlayer3 = new VariableRateMonoReader();
+                    synth.add(samplePlayer3);
+
+                    samplePlayer3.rate.set(sample3.getFrameRate());
+                    samplePlayer3.output.connect(0, mixer.input, 0);
+                    samplePlayer3.output.connect(0, mixer.input, 1);
+                    //samplePlayer3.dataQueue.queue(sample3);
+                }
+                if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                    s4 = new File(sample_path_4);
+                    sample4 = SampleLoader.loadFloatSample(s4);
+                    samplePlayer4 = new VariableRateMonoReader();
+                    synth.add(samplePlayer4);
+
+                    samplePlayer4.rate.set(sample4.getFrameRate());
+                    samplePlayer4.output.connect(0, mixer.input, 0);
+                    samplePlayer4.output.connect(0, mixer.input, 1);
+                    //samplePlayer4.dataQueue.queue(sample4);
+                }
+
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+
+            double bpm_d = Integer.parseInt(bpm_field.getText());
+            bpm_d = 60000/bpm_d;
+            int bpm_i = (int) Math.round(bpm_d);
+
+            try { 
+                FileWriter fw =new FileWriter(output); 
+                BufferedWriter buf = new BufferedWriter(fw);
+
+
+                for(int i=0; i<16; i++){
+                    //Tra un esecuzione e l'altra del ciclo faccio dormire il Thread per la durata indicata nel bpm
+                    java.awt.Color c = panel[i].getBackground();
+                    java.awt.Color c2 = panel[i+16].getBackground();
+                    java.awt.Color c3 = panel[i+32].getBackground();
+                    java.awt.Color c4 = panel[i+48].getBackground();
+                    if(c.equals(new java.awt.Color(r1,g1,b1))){
+                        if(sample_path_1 != null && !sample_path_1.isEmpty()){
+                            samplePlayer1.amplitude.set(0.25);
+                            samplePlayer1.dataQueue.queue(sample1);
+                            //System.out.println(i);
+                        }
+                    }
+                    if(c2.equals(new java.awt.Color(r2,g2,b2))){
+                        if(sample_path_2 != null && !sample_path_2.isEmpty()){
+                            samplePlayer2.amplitude.set(0.25);
+                            samplePlayer2.dataQueue.queue(sample2);
+                            //System.out.println(i+16);
+                        }
+                    }
+                    if(c3.equals(new java.awt.Color(r3,g3,b3))){
+                        if(sample_path_3 != null && !sample_path_3.isEmpty()){
+                            samplePlayer3.amplitude.set(0.25);
+                            samplePlayer3.dataQueue.queue(sample3);
+                            //System.out.println(i+32);
+                        }
+                    }
+                    if(c4.equals(new java.awt.Color(r4,g4,b4))){
+                        if(sample_path_4 != null && !sample_path_4.isEmpty()){
+                            samplePlayer4.amplitude.set(0.25);
+                            samplePlayer4.dataQueue.queue(sample4);
+                            //System.out.println(i+48);
+                        }
+                    }
+
+                    //questo prende l'output di tutto e lo registra nel file finale
+                    mixer.output.connect(0, record.getInput(), 0);
+                    mixer.output.connect(1, record.getInput(), 1);
+                    //questo lo suona mentre esegue il programma
+                    mixer.output.connect(0, line.input, 0);
+                    mixer.output.connect(1, line.input, 1);
+                    try {
+                        Thread.sleep(bpm_i);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if(c2.equals(new java.awt.Color(r2,g2,b2))){
-                    if(sample_path_2 != null && !sample_path_2.isEmpty()){
-                        samplePlayer2.amplitude.set(0.25);
-                        samplePlayer2.dataQueue.queue(sample2);
-                        System.out.println(i+16);
-                    }
-                }
-                if(c3.equals(new java.awt.Color(r3,g3,b3))){
-                    if(sample_path_3 != null && !sample_path_3.isEmpty()){
-                        samplePlayer3.amplitude.set(0.25);
-                        samplePlayer3.dataQueue.queue(sample3);
-                        System.out.println(i+32);
-                    }
-                }
-                if(c4.equals(new java.awt.Color(r4,g4,b4))){
-                    if(sample_path_4 != null && !sample_path_4.isEmpty()){
-                        samplePlayer4.amplitude.set(0.25);
-                        samplePlayer4.dataQueue.queue(sample4);
-                        System.out.println(i+48);
-                    }
-                }
-                //questo prende l'output di tutto e lo registra nel file finale
-                mixer.output.connect(0, record.getInput(), 0);
-                mixer.output.connect(1, record.getInput(), 1);
-                //questo lo suona mentre esegue il programma
-                mixer.output.connect(0, line.input, 0);
-                mixer.output.connect(1, line.input, 1);
+
+                buf.flush();
+                buf.close();
+
+            }catch (IOException ex) {
+                System.out.println("Error with saving file.");
+                ex.printStackTrace();
+            }
+
+            //per chiudere i moduli synth e record di jsyn
+             do {
                 try {
-                    Thread.sleep(bpm_i);
+                    synth.sleepFor(1.0);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-                
-            buf.flush();
-            buf.close();
-            
-        }catch (IOException ex) {
-            System.out.println("Error with saving file.");
-            ex.printStackTrace();
-        }
-
-        //ulteriore controllo...
-         do {
+            } while ((samplePlayer1!=null && samplePlayer1.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer2.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer3.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer4.dataQueue.hasMore()));
+            record.stop();
             try {
-                synth.sleepFor(1.0);
-            } catch (InterruptedException ex) {
+                record.close();
+            } catch (IOException ex) {
                 Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } while ((samplePlayer1!=null && samplePlayer1.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer2.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer3.dataQueue.hasMore()) && (samplePlayer1!=null && samplePlayer4.dataQueue.hasMore()));
-        record.stop();
-        try {
-            record.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Sequencer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        synth.stop(); 
-                
+            synth.stop(); 
+            
+            dialog.dispose();
+            JOptionPane.showMessageDialog(this, "Esportato con successo!");
+            
+        }else{
+            //non fare niente...
+        }          
     }   
-        
-    
-//******************************FINE ACTION PERFORMED BOTTONI***************************************************************
 
-//******************************SEZIONE KEY TYPED***************************************************************************
-    
+    //controllo INPUT su campo BPM
     private void bpm_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bpm_fieldKeyTyped
         //in questo modo blocco ogni inserimento che non siano numeri nel campo BPM 
         char vchar = evt.getKeyChar();
@@ -627,15 +642,10 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }//GEN-LAST:event_bpm_fieldKeyTyped
 
-//******************************FINE KEY TYPED******************************************************************************
 
-//******************************SEZIONE METODI AGGIUNTIVI*******************************************************************
-    
+    //PLAY: suona i sample degli step e li colora.
     private void playSequencer(){
-        //QUA DENTRO VA FATTO TUTTO:
-            // 1) aggiornare i colori degli step
-            // 2) play dei sample SE lo step è colorato
-            
+      
         if(cont_riga_1 == 16 && cont_riga_2 == 32 && cont_riga_3 ==48 && cont_riga_4 ==64){
             mydarker(cont_riga_1-1);
             cont_riga_1 = 0;
@@ -664,6 +674,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         java.awt.Color c3 = panel[cont_riga_3].getBackground();
         java.awt.Color c4 = panel[cont_riga_4].getBackground();
         
+        //prima riga/sample
         if(c.equals(new java.awt.Color(r1,g1,b1).brighter())){
             if(sample_path_1 != null && !sample_path_1.isEmpty()){
                 try {
@@ -677,7 +688,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 }
             }
         }
-        
+        //secondo riga/sample
         if(c2.equals(new java.awt.Color(r2,g2,b2).brighter())){
             if(sample_path_2 != null && !sample_path_2.isEmpty()){
                 try {
@@ -691,7 +702,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 }
             }
         }
-        
+        //terza riga/sample
         if(c3.equals(new java.awt.Color(r3,g3,b3).brighter())){
             if(sample_path_3 != null && !sample_path_3.isEmpty()){ 
                 try {
@@ -705,7 +716,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 }
             }
         }
-        
+        //quarta riga/sample
         if(c4.equals(new java.awt.Color(r4,g4,b4).brighter())){
             if(sample_path_4 != null && !sample_path_4.isEmpty()){
                 try {
@@ -764,11 +775,11 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
         }
     }
  
+    //CAMBIA IL COLORE QUANDO CLICCO SU UNO STEP
     private void step_MouseClicked(MouseEvent evt) {
         if(evt.getSource() instanceof JPanel){
             JPanel step = (JPanel)evt.getSource();
             
-            //ulteriore controllo per evitare BUG && PER VEDERE SE NON è STATO GIA SCHIACCIATO
             if(step.getBackground() == java.awt.Color.GRAY){
                 //Utile per capire quale step si sta schiacciando
                 /*
@@ -777,7 +788,7 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 */
                 JLabel numero = (JLabel)step.getComponent(0);
                 
-                //coloriamo gli step && SUONARE I SAMPLE QUANDO CLICCA(?)
+                //coloriamo gli step && SUONA IL SAMPLE QUANDO CLICCA
                 int scelta = 0;
                 scelta = Integer.parseInt(numero.getText());
                 
@@ -850,17 +861,14 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                 }
                 
             }else{
-                //LO STEP è GIA COLORATO
-                //per ora: non controllo i colori ma metto sempre a colore predefinito: GRAY
+                //LO STEP è GIA COLORATO, lo riporto al colore di prima
                 step.setBackground(java.awt.Color.GRAY);
-            
             }
-                
         }   
     }
     
     
-    //codice per i sampleLoader
+    //CARICAMENTO SAMPLES
     @Override
     public void actionPerformed(ActionEvent ae) {
         //carica i Samples
@@ -883,7 +891,6 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
                     butt.setForeground(java.awt.Color.GREEN);
                 }
                 
-                
                 if(ae.getSource() == sample1_button){
                     sample_path_1 = path;
                 }    
@@ -899,9 +906,9 @@ public class Sequencer extends javax.swing.JFrame implements ActionListener{
             }  
         }
     }
-
-//*****************************FINE SEZIONE METODI AGGIUNTIVI***************************************************************
-         
+        
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
